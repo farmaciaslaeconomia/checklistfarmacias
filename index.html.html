@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmacias La Economía | Checklist de Apertura y Cierre</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              navy: '#283A61',
+              navyDark: '#1b2845',
+              navyLight: '#364d7e',
+              cyan: '#00AEEF',
+              cyanDark: '#008ec4',
+              bg: '#F4F7FA',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Estilos de impresión para exportar checklist limpio */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #print-area, #print-area * {
+        visibility: visible;
+      }
+      #print-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white !important;
+        color: black !important;
+        padding: 16px;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+
+    /* Animaciones suaves para notificaciones Toast */
+    @keyframes slideInRight {
+      from {
+        transform: translateX(110%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    .toast-enter {
+      animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="bg-brand-bg text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- Contenedor Global de Notificaciones Emergentes (Toasts) -->
+  <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+  <!-- ===================================================================== -->
+  <!-- PANTALLA 1: INICIO DE SESIÓN (LOGIN)                                  -->
+  <!-- ===================================================================== -->
+  <section id="login-screen" class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-brand-navyDark via-brand-navy to-brand-navyLight">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden border border-white/10">
+      <!-- Cabecera del Login con Identidad Visual Oficial sobre Fondo Blanco -->
+      <div class="bg-white px-8 pt-8 pb-5 text-center relative overflow-hidden border-b border-slate-100">
+        <!-- Logotipo Vectorial SVG exacto al emblema LE+ Farmacias La Economía sobre blanco -->
+        <div class="inline-flex flex-col items-center justify-center relative z-10 bg-white px-6 py-3 rounded-2xl border border-slate-200/80 shadow-xs">
+          <svg class="w-52 h-auto" viewBox="0 0 280 215" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Logo Oficial Farmacias La Economía">
+            <!-- Monograma L exterior inclinado en azul marino corporativo (#283A61) con esquinas ligeramente suavizadas -->
+            <path d="M84 18C84.6 15.2 87 13.5 89.8 13.5H107.5C110.2 13.5 112.1 16 111.5 18.6L87.5 125.5H174.5C177.2 125.5 179.1 128 178.5 130.6L175.2 145.5C174.6 148.2 172.2 150 169.4 150H60.5C57.8 150 55.9 147.5 56.5 144.9L84 18Z" fill="#283A61"/>
+            <!-- Brazo superior y asta vertical interior de la E en azul marino (#283A61) -->
+            <path d="M120.5 18C121.1 15.2 123.5 13.5 126.3 13.5H206.5C209.2 13.5 211.1 16 210.5 18.6L207.2 33.5C206.6 36.2 204.2 38 201.4 38H142.5L125.5 113.5C124.9 116.2 122.5 118 119.7 118H102.5C99.8 118 97.9 115.5 98.5 112.9L120.5 18Z" fill="#283A61"/>
+            <!-- Cruz azul cian brillante (#00AEEF) ligeramente inclinada dentro del espacio de la E -->
+            <g transform="translate(168, 82) skewX(-12)">
+              <rect x="-12" y="-33" width="24" height="66" rx="3.5" fill="#00AEEF"/>
+              <rect x="-33" y="-12" width="66" height="24" rx="3.5" fill="#00AEEF"/>
+            </g>
+            <!-- Tipografía Línea 1: Farmacias (Itálica ligera en #283A61) -->
+            <text x="56" y="177" fill="#283A61" font-family="Inter, sans-serif" font-style="italic" font-weight="300" font-size="27" letter-spacing="0.3">Farmacias</text>
+            <!-- Tipografía Línea 2: La Economía (Itálica negrita en #283A61) -->
+            <text x="55" y="203" fill="#283A61" font-family="Inter, sans-serif" font-style="italic" font-weight="800" font-size="26.5" letter-spacing="-0.2">La Economía</text>
+            <!-- Detalle característico de cruz cian (#00AEEF) dentro de la letra 'e' de Economía -->
+            <g transform="translate(99.5, 194.2) skewX(-10)">
+              <rect x="-4.2" y="-1.3" width="8.4" height="2.6" rx="0.5" fill="#00AEEF"/>
+              <rect x="-1.3" y="-4.2" width="2.6" height="8.4" rx="0.5" fill="#00AEEF"/>
+            </g>
+          </svg>
+        </div>
+
+        <p class="text-brand-navy text-xs font-bold tracking-wider uppercase mt-3.5">
+          Sistema de Control Operativo • Piso de Ventas
+        </p>
+      </div>
+
+      <!-- Formulario de Autenticación -->
+      <form id="login-form" class="p-6 sm:p-8 space-y-5">
+        <div>
+          <h1 class="text-xl font-bold text-brand-navy text-center">Iniciar Sesión</h1>
+          <p class="text-xs text-slate-500 text-center mt-1">Ingrese sus credenciales corporativas asignadas</p>
+        </div>
+
+        <div id="login-error" class="hidden bg-red-50 border border-red-200 text-red-700 text-xs font-medium px-4 py-3 rounded-xl flex items-center gap-2">
+          <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 text-red-600"></i>
+          <span id="login-error-text">Usuario o contraseña incorrectos.</span>
+        </div>
+
+        <div>
+          <label for="login-username" class="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1.5">
+            Usuario
+          </label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+              <i data-lucide="user" class="w-4 h-4"></i>
+            </span>
+            <input
+              type="text"
+              id="login-username"
+              required
+              autocomplete="username"
+              placeholder="Ej. FLE, FPB o FEP"
+              class="w-full pl-10 pr-4 py-3 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan uppercase transition"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="login-password" class="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1.5">
+            Contraseña
+          </label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+              <i data-lucide="lock" class="w-4 h-4"></i>
+            </span>
+            <input
+              type="password"
+              id="login-password"
+              required
+              autocomplete="current-password"
+              placeholder="Ingrese su contraseña"
+              class="w-full pl-10 pr-11 py-3 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition"
+            />
+            <button
+              type="button"
+              id="toggle-password"
+              title="Mostrar u ocultar contraseña"
+              class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-brand-navy transition"
+            >
+              <i data-lucide="eye" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full py-3.5 px-4 bg-brand-navy hover:bg-brand-navyLight active:bg-brand-navyDark text-white font-semibold text-sm rounded-xl shadow-lg shadow-brand-navy/20 flex items-center justify-center gap-2 transition cursor-pointer"
+        >
+          <span>Ingresar al Sistema</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Guía rápida desplegable de accesos configurados -->
+        <details class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-600">
+          <summary class="font-semibold text-brand-navy cursor-pointer select-none flex items-center justify-between">
+            <span>Ver directorio de usuarios habilitados</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-brand-cyan"></i>
+          </summary>
+          <div class="mt-2.5 pt-2.5 border-t border-slate-200 space-y-2">
+            <div>
+              <p class="font-bold text-brand-navy">Sucursales (Operadores):</p>
+              <ul class="mt-1 space-y-0.5 text-[11px] text-slate-600">
+                <li>• <strong>FLE</strong> — Farmacia La Economía</li>
+                <li>• <strong>FPB</strong> — Farmacia Plaza Bruzual</li>
+                <li>• <strong>FEP</strong> — Farmacia Excelsa Pastora</li>
+                <li>• <strong>FSC</strong> — Farmacia Social Chivacoa</li>
+                <li>• <strong>FOU</strong> — Farma Ofertas de Urachiche</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-bold text-brand-cyanDark">Administradores (Control Total):</p>
+              <ul class="mt-1 space-y-0.5 text-[11px] text-slate-600">
+                <li>• <strong>WFIGUEREDO</strong> • <strong>OSUAREZ</strong> • <strong>PRINCIPAL</strong></li>
+              </ul>
+            </div>
+          </div>
+        </details>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- PANTALLA 2: APLICACIÓN PRINCIPAL                                      -->
+  <!-- ===================================================================== -->
+  <div id="app-screen" class="hidden flex-1 flex flex-col">
+
+    <!-- Barra Superior Corporativa -->
+    <header class="bg-brand-navy text-white shadow-md sticky top-0 z-30 no-print">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
+        <!-- Logo Compacto sobre fondo blanco y Título -->
+        <div class="flex items-center gap-3">
+          <div class="bg-white px-2.5 py-1.5 rounded-xl border border-slate-200 shadow-xs shrink-0">
+            <svg class="w-14 h-11" viewBox="0 0 280 215" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Logo Farmacias La Economía">
+              <path d="M84 18C84.6 15.2 87 13.5 89.8 13.5H107.5C110.2 13.5 112.1 16 111.5 18.6L87.5 125.5H174.5C177.2 125.5 179.1 128 178.5 130.6L175.2 145.5C174.6 148.2 172.2 150 169.4 150H60.5C57.8 150 55.9 147.5 56.5 144.9L84 18Z" fill="#283A61"/>
+              <path d="M120.5 18C121.1 15.2 123.5 13.5 126.3 13.5H206.5C209.2 13.5 211.1 16 210.5 18.6L207.2 33.5C206.6 36.2 204.2 38 201.4 38H142.5L125.5 113.5C124.9 116.2 122.5 118 119.7 118H102.5C99.8 118 97.9 115.5 98.5 112.9L120.5 18Z" fill="#283A61"/>
+              <g transform="translate(168, 82) skewX(-12)">
+                <rect x="-12" y="-33" width="24" height="66" rx="3.5" fill="#00AEEF"/>
+                <rect x="-33" y="-12" width="66" height="24" rx="3.5" fill="#00AEEF"/>
+              </g>
+              <text x="56" y="177" fill="#283A61" font-family="Inter, sans-serif" font-style="italic" font-weight="300" font-size="27" letter-spacing="0.3">Farmacias</text>
+              <text x="55" y="203" fill="#283A61" font-family="Inter, sans-serif" font-style="italic" font-weight="800" font-size="26.5" letter-spacing="-0.2">La Economía</text>
+              <g transform="translate(99.5, 194.2) skewX(-10)">
+                <rect x="-4.2" y="-1.3" width="8.4" height="2.6" rx="0.5" fill="#00AEEF"/>
+                <rect x="-1.3" y="-4.2" width="2.6" height="8.4" rx="0.5" fill="#00AEEF"/>
+              </g>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-base sm:text-lg tracking-tight leading-none">Farmacias La Economía</span>
+              <span class="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-brand-cyan text-white">
+                Piso de Ventas
+              </span>
+            </div>
+            <p class="text-xs text-sky-200 mt-0.5">Checklist Operativo de Apertura y Cierre</p>
+          </div>
+        </div>
+
+        <!-- Información del Usuario Activo y Cerrar Sesión -->
+        <div class="flex items-center gap-2 sm:gap-4 ml-auto">
+          <div class="text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <span id="header-username" class="text-xs sm:text-sm font-bold text-white">USUARIO</span>
+              <span id="header-role-badge" class="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase bg-brand-cyan text-white">
+                ROL
+              </span>
+            </div>
+            <p id="header-branch-name" class="text-[11px] text-sky-200 truncate max-w-[180px] sm:max-w-xs">
+              Sucursal
+            </p>
+          </div>
+
+          <button
+            id="logout-btn"
+            type="button"
+            class="p-2.5 sm:px-3.5 sm:py-2 rounded-xl bg-white/10 hover:bg-red-500/90 text-white text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer"
+            title="Cerrar Sesión"
+          >
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">Salir</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Barra de Navegación por Pestañas -->
+      <nav class="bg-brand-navyDark/70 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex overflow-x-auto gap-1 py-1.5">
+          <button
+            type="button"
+            data-tab="checklist"
+            class="nav-tab active-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 whitespace-nowrap transition cursor-pointer bg-brand-cyan text-white shadow-sm"
+          >
+            <i data-lucide="clipboard-check" class="w-4 h-4"></i>
+            <span>Nuevo Checklist</span>
+          </button>
+
+          <button
+            type="button"
+            data-tab="admin-panel"
+            class="nav-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 whitespace-nowrap transition cursor-pointer text-sky-100 hover:bg-white/10"
+          >
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+            <span id="tab-admin-label">Panel de Control / Registros</span>
+            <span id="pending-counter-badge" class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-amber-400 text-brand-navyDark">0</span>
+          </button>
+
+          <!-- Pestaña de Notificaciones y Auditoría: Exclusiva para Administradores -->
+          <button
+            type="button"
+            id="nav-tab-audit"
+            data-tab="audit-log"
+            class="nav-tab hidden px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold items-center gap-2 whitespace-nowrap transition cursor-pointer text-sky-100 hover:bg-white/10"
+          >
+            <i data-lucide="bell-ring" class="w-4 h-4"></i>
+            <span>Notificaciones y Auditoría</span>
+            <span id="audit-counter-badge" class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-white/20 text-white">0</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+      <!-- =================================================================== -->
+      <!-- VISTA 1: FORMULARIO EJECUTABLE DE CHECKLIST                         -->
+      <!-- =================================================================== -->
+      <div id="view-checklist" class="space-y-6">
+
+        <!-- Tarjeta de Cabecera y Selector Apertura / Cierre -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-6">
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-5 border-b border-slate-100">
+            <div>
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-brand-cyan">
+                <i data-lucide="store" class="w-3.5 h-3.5"></i>
+                Control Operativo Diario
+              </span>
+              <h2 class="text-xl sm:text-2xl font-extrabold text-brand-navy mt-1">
+                Formulario de Checklist de Sucursal
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
+                Complete cada área operativa, cajas, limpieza y administración antes de enviar el documento.
+              </p>
+            </div>
+
+            <!-- Selector de Turno: Apertura vs Cierre -->
+            <div class="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200 self-start lg:self-center">
+              <button
+                type="button"
+                id="btn-shift-apertura"
+                class="px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition cursor-pointer bg-brand-navy text-white shadow"
+              >
+                <i data-lucide="sunrise" class="w-4 h-4 text-brand-cyan"></i>
+                <span>Apertura de Tienda</span>
+              </button>
+              <button
+                type="button"
+                id="btn-shift-cierre"
+                class="px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition cursor-pointer text-slate-600 hover:text-brand-navy"
+              >
+                <i data-lucide="moon" class="w-4 h-4"></i>
+                <span>Cierre de Tienda</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Datos Generales del Turno -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-5">
+            <!-- Sucursal -->
+            <div>
+              <label for="form-branch" class="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                Sucursal *
+              </label>
+              <select
+                id="form-branch"
+                class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan font-medium text-brand-navy disabled:bg-slate-100 disabled:text-slate-600"
+              >
+                <option value="FLE">FLE - Farmacia La Economía</option>
+                <option value="FPB">FPB - Farmacia Plaza Bruzual</option>
+                <option value="FEP">FEP - Farmacia Excelsa Pastora</option>
+                <option value="FSC">FSC - Farmacia Social Chivacoa</option>
+                <option value="FOU">FOU - Farma Ofertas de Urachiche</option>
+              </select>
+              <p id="branch-lock-hint" class="text-[11px] text-slate-400 mt-1 hidden">
+                Sucursal fijada automáticamente por tu usuario.
+              </p>
+            </div>
+
+            <!-- Fecha -->
+            <div>
+              <label for="form-date" class="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                Fecha de Ejecución *
+              </label>
+              <input
+                type="date"
+                id="form-date"
+                required
+                class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan"
+              />
+            </div>
+
+            <!-- Hora -->
+            <div>
+              <label for="form-time" class="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                Hora de Registro *
+              </label>
+              <input
+                type="time"
+                id="form-time"
+                required
+                class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan"
+              />
+            </div>
+
+            <!-- Responsable de Turno -->
+            <div>
+              <label for="form-responsible" class="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                Responsable / Regente / Anfitriona *
+              </label>
+              <input
+                type="text"
+                id="form-responsible"
+                required
+                placeholder="Nombre y Apellido del encargado"
+                class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan"
+              />
+            </div>
+          </div>
+
+          <!-- Barra de Progreso en Tiempo Real -->
+          <div class="mt-6 bg-slate-50 border border-slate-200/80 rounded-xl p-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold uppercase text-brand-navy">Progreso del Checklist:</span>
+                <span id="progress-count-text" class="text-xs font-semibold text-slate-600">0 de 0 ítems evaluados</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-lg">
+                  Cumplimiento: <strong id="compliance-percent">0%</strong>
+                </span>
+                <button
+                  type="button"
+                  id="btn-mark-all-ok"
+                  class="text-xs font-semibold text-brand-cyan hover:text-brand-navy underline cursor-pointer"
+                >
+                  Marcar todos "Cumple"
+                </button>
+              </div>
+            </div>
+            <div class="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden">
+              <div id="progress-bar-fill" class="h-full bg-gradient-to-r from-brand-navy to-brand-cyan transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenedor Dinámico de Secciones del Checklist -->
+        <form id="checklist-form" class="space-y-5">
+          <div id="checklist-sections-container" class="space-y-5"></div>
+
+          <!-- Bloque de Novedades / Problemas Detectados y Estatus Inicial -->
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-6 space-y-5">
+            <div class="flex items-center gap-2.5 border-b border-slate-100 pb-3">
+              <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-brand-navy">Reporte de Novedades, Fallas o Problemas del Turno</h3>
+                <p class="text-xs text-slate-500">Detalle cualquier incidencia operativa, técnica, de inventario, refrigeración o personal.</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+              <div class="lg:col-span-2">
+                <label for="form-issues" class="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                  Descripción de Novedades / Problemas Detectados
+                </label>
+                <textarea
+                  id="form-issues"
+                  rows="3"
+                  placeholder="Ej: Punto de venta #2 presenta intermitencia de conexión; temperatura de nevera en 5°C estable; sin novedades críticas..."
+                  class="w-full p-3.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan"
+                ></textarea>
+              </div>
+
+              <!-- Estado Inicial del Documento (Bloqueado para Sucursales) -->
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-1.5">
+                    <label for="form-initial-status" class="text-xs font-bold text-brand-navy uppercase">
+                      Estado Inicial del Documento
+                    </label>
+                    <span id="status-lock-badge" class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-700">
+                      <i data-lucide="lock" class="w-3 h-3"></i> Solo Admin
+                    </span>
+                  </div>
+                  <select
+                    id="form-initial-status"
+                    disabled
+                    class="w-full px-3 py-2 text-xs font-bold rounded-lg border border-slate-300 bg-amber-50 text-amber-800 disabled:opacity-90 disabled:cursor-not-allowed"
+                  >
+                    <option value="Estado Inicial - Pendiente de Revisión" selected>Estado Inicial - Pendiente de Revisión</option>
+                    <option value="En Revisión / Proceso">En Revisión / Proceso</option>
+                    <option value="Aprobado / Resuelto">Aprobado / Resuelto</option>
+                    <option value="Observado / Requiere Acción">Observado / Requiere Acción</option>
+                  </select>
+                </div>
+                <p id="status-permission-note" class="text-[11px] text-slate-500 mt-2 leading-relaxed">
+                  Al subir el formulario se registra con <strong>Estado Inicial</strong>. Únicamente un Administrador puede modificar su estatus.
+                </p>
+              </div>
+            </div>
+
+            <!-- Botones de Acción del Formulario -->
+            <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <button
+                type="button"
+                id="btn-reset-form"
+                class="w-full sm:w-auto px-5 py-3 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition cursor-pointer"
+              >
+                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                <span>Limpiar Formulario</span>
+              </button>
+
+              <button
+                type="submit"
+                class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-brand-navy hover:bg-brand-navyLight text-white text-sm font-bold shadow-lg shadow-brand-navy/20 flex items-center justify-center gap-2 transition cursor-pointer"
+              >
+                <i data-lucide="send" class="w-4 h-4 text-brand-cyan"></i>
+                <span>Registrar y Subir Checklist</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- VISTA 2: PANEL DE CONTROL DE ADMINISTRADORES / HISTORIAL REGISTROS  -->
+      <!-- =================================================================== -->
+      <div id="view-admin-panel" class="hidden space-y-6">
+
+        <!-- Banner Informativo según Rol -->
+        <div id="role-banner" class="bg-white border border-slate-200 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
+          <div class="flex items-start gap-3.5">
+            <div id="role-banner-icon" class="w-11 h-11 rounded-2xl bg-brand-navy text-brand-cyan flex items-center justify-center shrink-0">
+              <i data-lucide="shield" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h2 id="role-banner-title" class="text-lg sm:text-xl font-extrabold text-brand-navy">
+                Panel de Control de Administradores
+              </h2>
+              <p id="role-banner-desc" class="text-xs sm:text-sm text-slate-600 mt-0.5">
+                Gestione los checklists enviados por las sucursales, actualice estatus, agregue fechas de resolución y documente soluciones.
+              </p>
+            </div>
+          </div>
+          <div id="admin-badge-pill" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold self-start sm:self-center">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+            <span>Permisos de Edición Activos</span>
+          </div>
+        </div>
+
+        <!-- Tarjetas de KPIs / Indicadores -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+            <p class="text-xs font-semibold text-slate-500 uppercase">Total Documentos</p>
+            <p id="kpi-total" class="text-2xl sm:text-3xl font-extrabold text-brand-navy mt-1">0</p>
+          </div>
+          <div class="bg-white p-4 sm:p-5 rounded-2xl border border-amber-200 bg-amber-50/30 shadow-sm">
+            <p class="text-xs font-semibold text-amber-700 uppercase">Estado Inicial / Pendiente</p>
+            <p id="kpi-pending" class="text-2xl sm:text-3xl font-extrabold text-amber-600 mt-1">0</p>
+          </div>
+          <div class="bg-white p-4 sm:p-5 rounded-2xl border border-sky-200 bg-sky-50/30 shadow-sm">
+            <p class="text-xs font-semibold text-sky-700 uppercase">En Revisión / Observado</p>
+            <p id="kpi-inprogress" class="text-2xl sm:text-3xl font-extrabold text-brand-cyan mt-1">0</p>
+          </div>
+          <div class="bg-white p-4 sm:p-5 rounded-2xl border border-emerald-200 bg-emerald-50/30 shadow-sm">
+            <p class="text-xs font-semibold text-emerald-700 uppercase">Aprobado / Resuelto</p>
+            <p id="kpi-resolved" class="text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-1">0</p>
+          </div>
+        </div>
+
+        <!-- Barra de Filtros -->
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Filtrar por Sucursal</label>
+            <select id="filter-branch" class="w-full px-3 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan">
+              <option value="ALL">Todas las Sucursales</option>
+              <option value="FLE">FLE - Farmacia La Economía</option>
+              <option value="FPB">FPB - Farmacia Plaza Bruzual</option>
+              <option value="FEP">FEP - Farmacia Excelsa Pastora</option>
+              <option value="FSC">FSC - Farmacia Social Chivacoa</option>
+              <option value="FOU">FOU - Farma Ofertas de Urachiche</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Tipo de Checklist</label>
+            <select id="filter-shift" class="w-full px-3 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan">
+              <option value="ALL">Apertura y Cierre</option>
+              <option value="Apertura">Solo Apertura</option>
+              <option value="Cierre">Solo Cierre</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Estatus del Documento</label>
+            <select id="filter-status" class="w-full px-3 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan">
+              <option value="ALL">Todos los Estatus</option>
+              <option value="Estado Inicial - Pendiente de Revisión">Estado Inicial - Pendiente de Revisión</option>
+              <option value="En Revisión / Proceso">En Revisión / Proceso</option>
+              <option value="Observado / Requiere Acción">Observado / Requiere Acción</option>
+              <option value="Aprobado / Resuelto">Aprobado / Resuelto</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Buscar ID o Responsable</label>
+            <input
+              type="text"
+              id="filter-search"
+              placeholder="Ej. CHK-2026 o nombre..."
+              class="w-full px-3 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan"
+            />
+          </div>
+        </div>
+
+        <!-- Lista de Registros Enviados -->
+        <div id="submissions-list" class="space-y-4"></div>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- VISTA 3: BITÁCORA DE NOTIFICACIONES Y AUDITORÍA DE MOVIMIENTOS      -->
+      <!-- =================================================================== -->
+      <div id="view-audit-log" class="hidden space-y-6">
+        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sm:p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+            <div>
+              <h2 class="text-lg sm:text-xl font-extrabold text-brand-navy flex items-center gap-2">
+                <i data-lucide="activity" class="w-5 h-5 text-brand-cyan"></i>
+                <span>Registro de Notificaciones y Trazabilidad de Usuarios</span>
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
+                Historial automático de cada inicio de sesión, envío de formulario, cambio de estatus o edición realizada.
+              </p>
+            </div>
+            <span class="text-xs font-semibold text-brand-navy bg-sky-50 border border-sky-200 px-3 py-1.5 rounded-xl self-start">
+              Auditoría Activa en Tiempo Real
+            </span>
+          </div>
+
+          <div id="audit-log-list" class="mt-4 divide-y divide-slate-100"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL DE GESTIÓN / DETALLE DE DOCUMENTO (ADMINISTRADOR Y LECTURA)     -->
+  <!-- ===================================================================== -->
+  <div id="doc-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl border border-slate-200 overflow-hidden my-auto max-h-[92vh] flex flex-col">
+
+      <!-- Cabecera Modal -->
+      <div class="bg-brand-navy text-white px-5 py-4 flex items-center justify-between gap-3 shrink-0">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="modal-doc-id" class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-brand-cyan text-white">CHK-0000</span>
+            <span id="modal-doc-shift" class="text-xs font-semibold text-sky-200">Apertura de Tienda</span>
+          </div>
+          <h3 id="modal-doc-branch" class="text-base sm:text-lg font-bold mt-0.5">Sucursal</h3>
+        </div>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition cursor-pointer"
+        >
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Cuerpo Desplazable del Modal -->
+      <div id="print-area" class="p-5 sm:p-6 overflow-y-auto space-y-6 flex-1">
+
+        <!-- Metadatos del Documento -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs">
+          <div>
+            <span class="text-slate-400 font-semibold block uppercase">Fecha y Hora</span>
+            <span id="modal-meta-datetime" class="font-bold text-slate-800 mt-0.5 block">-</span>
+          </div>
+          <div>
+            <span class="text-slate-400 font-semibold block uppercase">Responsable Turno</span>
+            <span id="modal-meta-responsible" class="font-bold text-slate-800 mt-0.5 block">-</span>
+          </div>
+          <div>
+            <span class="text-slate-400 font-semibold block uppercase">Registrado por</span>
+            <span id="modal-meta-creator" class="font-bold text-brand-navy mt-0.5 block">-</span>
+          </div>
+          <div>
+            <span class="text-slate-400 font-semibold block uppercase">Cumplimiento</span>
+            <span id="modal-meta-compliance" class="font-extrabold text-emerald-600 mt-0.5 block">-</span>
+          </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- SECCIÓN DE CONTROL ADMINISTRATIVO (ESTATUS, RESOLUCIÓN, NOTAS)  -->
+        <!-- =============================================================== -->
+        <div class="bg-sky-50/60 border-2 border-brand-cyan/30 rounded-2xl p-4 sm:p-5 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-brand-cyan/20 pb-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="sliders-horizontal" class="w-5 h-5 text-brand-navy"></i>
+              <h4 class="text-sm sm:text-base font-extrabold text-brand-navy">
+                Gestión de Estatus, Resolución y Seguimiento
+              </h4>
+            </div>
+            <span id="modal-admin-lock-info" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-brand-navy text-white">
+              Modo Administrador
+            </span>
+          </div>
+
+          <!-- Fila 1: Estatus del Documento y Fecha de Resolución -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="modal-status-select" class="block text-xs font-bold text-brand-navy uppercase mb-1.5">
+                Estatus del Documento *
+              </label>
+              <select
+                id="modal-status-select"
+                class="w-full px-3.5 py-2.5 text-sm font-bold bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan disabled:bg-slate-100 disabled:text-slate-500 disabled:cursor-not-allowed"
+              >
+                <option value="Estado Inicial - Pendiente de Revisión">Estado Inicial - Pendiente de Revisión</option>
+                <option value="En Revisión / Proceso">En Revisión / Proceso</option>
+                <option value="Observado / Requiere Acción">Observado / Requiere Acción</option>
+                <option value="Aprobado / Resuelto">Aprobado / Resuelto</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="modal-resolution-date" class="block text-xs font-bold text-brand-navy uppercase mb-1.5">
+                Fecha y Hora de Resolución
+              </label>
+              <div class="flex gap-2">
+                <input
+                  type="datetime-local"
+                  id="modal-resolution-date"
+                  class="w-full px-3.5 py-2.5 text-sm bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan disabled:bg-slate-100 disabled:text-slate-500 disabled:cursor-not-allowed"
+                />
+                <button
+                  type="button"
+                  id="btn-set-now-resolution"
+                  title="Asignar fecha y hora actual"
+                  class="px-3 py-2 bg-brand-cyan hover:bg-brand-cyanDark text-white text-xs font-bold rounded-xl shrink-0 transition cursor-pointer disabled:hidden"
+                >
+                  Hoy
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fila 2: Problema Original + Incorporar Adicionales al Problema -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="modal-initial-issue" class="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                Novedad / Problema Reportado (Editable por Admin)
+              </label>
+              <textarea
+                id="modal-initial-issue"
+                rows="3"
+                class="w-full p-3 text-xs sm:text-sm bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan disabled:bg-slate-100 disabled:text-slate-600"
+              ></textarea>
+            </div>
+
+            <div>
+              <label for="modal-additional-problem" class="block text-xs font-bold text-amber-800 uppercase mb-1.5">
+                Adicionales al Problema (Hallazgos / Ampliación)
+              </label>
+              <textarea
+                id="modal-additional-problem"
+                rows="3"
+                placeholder="Incorpore detalles adicionales sobre la causa raíz, equipos involucrados o alcance del problema..."
+                class="w-full p-3 text-xs sm:text-sm bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan disabled:bg-slate-100 disabled:text-slate-600"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Fila 3: Soluciones Aplicadas / Adicionales a las Soluciones -->
+          <div>
+            <label for="modal-solutions" class="block text-xs font-bold text-emerald-800 uppercase mb-1.5">
+              Soluciones Aplicadas y Acciones Correctivas Adicionales
+            </label>
+            <textarea
+              id="modal-solutions"
+              rows="3"
+              placeholder="Documente las soluciones ejecutadas, reemplazos, soporte técnico realizado o medidas preventivas..."
+              class="w-full p-3 text-xs sm:text-sm bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan disabled:bg-slate-100 disabled:text-slate-600"
+            ></textarea>
+          </div>
+
+          <!-- Fila 4: Anotaciones de Respuestas Administrativas -->
+          <div class="pt-2 border-t border-brand-cyan/20">
+            <label class="block text-xs font-bold text-brand-navy uppercase mb-2">
+              Historial de Anotaciones de Respuestas
+            </label>
+
+            <div id="modal-notes-list" class="space-y-2 mb-3 max-h-40 overflow-y-auto"></div>
+
+            <div id="modal-add-note-box" class="flex flex-col sm:flex-row gap-2">
+              <input
+                type="text"
+                id="modal-new-note-input"
+                placeholder="Escriba una nueva anotación de respuesta o seguimiento..."
+                class="flex-1 px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan"
+              />
+              <button
+                type="button"
+                id="btn-add-admin-note"
+                class="px-4 py-2.5 bg-brand-navy hover:bg-brand-navyLight text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition cursor-pointer shrink-0"
+              >
+                <i data-lucide="message-square-plus" class="w-4 h-4 text-brand-cyan"></i>
+                <span>Añadir Anotación</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Botón Guardar Cambios Administrativos -->
+          <div id="modal-save-admin-bar" class="pt-2 flex justify-end">
+            <button
+              type="button"
+              id="btn-save-admin-changes"
+              class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md flex items-center gap-2 transition cursor-pointer"
+            >
+              <i data-lucide="save" class="w-4 h-4"></i>
+              <span>Guardar Cambios y Registrar Movimiento</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Resumen Detallado de Ítems Evaluados en el Checklist -->
+        <div>
+          <h4 class="text-sm font-extrabold text-brand-navy uppercase tracking-wide mb-3">
+            Detalle de Puntos Verificados en Piso de Ventas
+          </h4>
+          <div id="modal-checklist-items" class="space-y-3"></div>
+        </div>
+
+        <!-- Trazabilidad específica del documento -->
+        <div>
+          <h4 class="text-xs font-extrabold text-slate-500 uppercase tracking-wide mb-2">
+            Historial de Movimientos en este Documento
+          </h4>
+          <div id="modal-doc-history" class="bg-slate-50 rounded-xl border border-slate-200 p-3 space-y-1.5 text-xs"></div>
+        </div>
+      </div>
+
+      <!-- Pie del Modal: Exportar WhatsApp / Imprimir -->
+      <div class="bg-slate-50 border-t border-slate-200 px-5 py-3.5 flex flex-wrap items-center justify-between gap-2 shrink-0 no-print">
+        <div class="flex flex-wrap gap-2">
+          <button
+            type="button"
+            id="btn-copy-whatsapp"
+            class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition cursor-pointer"
+          >
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            <span>Copiar Resumen WhatsApp</span>
+          </button>
+
+          <button
+            type="button"
+            id="btn-print-doc"
+            class="px-4 py-2 bg-brand-navy hover:bg-brand-navyLight text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition cursor-pointer"
+          >
+            <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+            <span>Imprimir / PDF</span>
+          </button>
+        </div>
+
+        <button
+          type="button"
+          id="close-modal-footer-btn"
+          class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold rounded-xl transition cursor-pointer"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- LÓGICA DE APLICACIÓN JAVASCRIPT                                       -->
+  <!-- ===================================================================== -->
+  <script>
+    /**
+     * 1. CONFIGURACIÓN DE USUARIOS, SUCURSALES Y ROLES
+     */
+    const USERS_DB = {
+      // Usuarios de Sucursal (Operadores)
+      'FLE': { password: 'J310226717', role: 'Sucursal', branchCode: 'FLE', branchName: 'Farmacia La Economía' },
+      'FPB': { password: 'J504943312', role: 'Sucursal', branchCode: 'FPB', branchName: 'Farmacia Plaza Bruzual' },
+      'FEP': { password: 'J504943312', role: 'Sucursal', branchCode: 'FEP', branchName: 'Farmacia Excelsa Pastora' },
+      'FSC': { password: 'J314260065', role: 'Sucursal', branchCode: 'FSC', branchName: 'Farmacia Social Chivacoa' },
+      'FOU': { password: 'J313596914', role: 'Sucursal', branchCode: 'FOU', branchName: 'Farma Ofertas de Urachiche' },
+
+      // Usuarios Administradores (Permisos Totales)
+      'WFIGUEREDO': { password: '29910460', role: 'Administrador', branchCode: 'ALL', branchName: 'Administración Central' },
+      'OSUAREZ':    { password: '12527382', role: 'Administrador', branchCode: 'ALL', branchName: 'Administración Central' },
+      'PRINCIPAL':  { password: '12345678', role: 'Administrador', branchCode: 'ALL', branchName: 'Dirección Principal' }
+    };
+
+    const BRANCHES_MAP = {
+      'FLE': 'FLE - Farmacia La Economía',
+      'FPB': 'FPB - Farmacia Plaza Bruzual',
+      'FEP': 'FEP - Farmacia Excelsa Pastora',
+      'FSC': 'FSC - Farmacia Social Chivacoa',
+      'FOU': 'FOU - Farma Ofertas de Urachiche'
+    };
+
+    /**
+     * 2. PLANTILLAS DE CHECKLIST (APERTURA Y CIERRE PARA FARMACIA CON PISO DE VENTAS)
+     */
+    const CHECKLIST_TEMPLATES = {
+      'Apertura': [
+        {
+          id: 'op_seg',
+          title: 'A. Parte Operativa y Seguridad',
+          icon: 'shield-alert',
+          items: [
+            'Inspección externa e interna de candados de seguridad, cerraduras y santamarías sin novedades.',
+            'Encendido de iluminación general del piso de ventas, vitrinas y avisos luminosos exteriores.',
+            'Encendido y verificación de climatización (aires acondicionados en temperatura confortable).',
+            'Verificación de funcionamiento de neveras de cadena de frío y registro de temperatura (2°C - 8°C).',
+            'Verificación de operatividad de planta eléctrica / UPS, servidores y conexión a internet.',
+            'Revisión de área de recepción y verificación de pedidos pendientes de droguerías/proveedores.'
+          ]
+        },
+        {
+          id: 'cajas_fact',
+          title: 'B. Cajas y Facturación',
+          icon: 'calculator',
+          items: [
+            'Verificación de actualización de tasa cambiaria oficial (BCV) en el sistema de facturación.',
+            'Prueba de encendido e impresión de impresoras fiscales, puntos de venta (POS) y Biopago.',
+            'Conteo y verificación de fondo de caja sencillo/cambio inicial para inicio de operaciones.',
+            'Disponibilidad de rollos térmicos, papelería fiscal, bolsas y material de empaque en cajas.'
+          ]
+        },
+        {
+          id: 'piso_limpieza',
+          title: 'C. Piso de Ventas, Orden y Limpieza',
+          icon: 'sparkles',
+          items: [
+            'Limpieza general de pisos, pasillos, mostradores de atención y vitrinas de exhibición.',
+            'Ordenamiento y frenteo de productos en anaqueles, góndolas y estanterías principales.',
+            'Verificación de habladores de precios visibles, actualizados y sin etiquetas deterioradas.',
+            'Revisión de limpieza e insumos en baños y áreas comunes de personal.'
+          ]
+        },
+        {
+          id: 'admin_atencion',
+          title: 'D. Área Administrativa y Atención al Cliente',
+          icon: 'briefcase',
+          items: [
+            'Revisión de libro de novedades del cierre anterior y seguimiento de pendientes operativos.',
+            'Presentación personal del equipo de turno (uniforme reglamentario e identificación visible).',
+            'Verificación de disponibilidad de libro de recetas / control de medicamentos regulados.'
+          ]
+        }
+      ],
+      'Cierre': [
+        {
+          id: 'op_seg',
+          title: 'A. Parte Operativa y Seguridad',
+          icon: 'shield-alert',
+          items: [
+            'Apagado ordenado de iluminación de piso de ventas, avisos luminosos y aires acondicionados.',
+            'Verificación de conexión eléctrica estable y temperatura (2°C - 8°C) en neveras de cadena de frío.',
+            'Resguardo de mercancía de alto valor, medicamentos controlados y equipos portátiles.',
+            'Cierre total de santamarías y colocación/verificación física de candados de seguridad.',
+            'Envío de reporte fotográfico y confirmación de cierre al canal operativo.'
+          ]
+        },
+        {
+          id: 'cajas_fact',
+          title: 'B. Cajas y Facturación',
+          icon: 'calculator',
+          items: [
+            'Ejecución de cierre de lotes en todos los puntos de venta (POS) y equipos Biopago.',
+            'Emisión de Reporte Z / cierre fiscal diario en cada caja operativa.',
+            'Arqueo detallado de caja (efectivo Bs, divisas, pago móvil, transferencias y comprobantes).',
+            'Resguardo seguro del efectivo, soportes de cierre y llaves en caja fuerte/buzón.',
+            'Apagado correcto de monitores, CPU y terminales de punto de venta.'
+          ]
+        },
+        {
+          id: 'piso_limpieza',
+          title: 'C. Piso de Ventas, Orden y Limpieza',
+          icon: 'sparkles',
+          items: [
+            'Limpieza general de piso de ventas, mostradores de atención y área de cajas.',
+            'Recolección de desechos sólidos y vaciado de todas las papeleras de tienda y baños.',
+            'Reposición nocturna básica de productos de alta rotación y frenteo general de góndolas.',
+            'Revisión preventiva de fechas de vencimiento próximas en estanterías del piso de ventas.',
+            'Ordenamiento de mobiliario, escaleras de piso y cestas de compra.'
+          ]
+        },
+        {
+          id: 'admin_atencion',
+          title: 'D. Área Administrativa y Atención al Cliente',
+          icon: 'briefcase',
+          items: [
+            'Archivo y respaldo ordenado de facturas de proveedores, guías de despacho y notas del día.',
+            'Actualización y cierre diario del libro de control de medicamentos psicotrópicos/regulados.',
+            'Registro de incidencias, fallas técnicas o requerimientos de mantenimiento en el sistema.',
+            'Entrega formal de novedades y pendientes operativos para el turno de apertura.'
+          ]
+        }
+      ]
+    };
+
+    /**
+     * 3. ESTADO GLOBAL Y ALMACENAMIENTO PERSISTENTE (LocalStorage)
+     */
+    const STORAGE_KEYS = {
+      SESSION: 'fle_active_session_v1',
+      RECORDS: 'fle_checklist_records_v1',
+      AUDIT:   'fle_audit_logs_v1'
+    };
+
+    let currentUser = null;
+    let currentShift = 'Apertura';
+    let records = [];
+    let auditLogs = [];
+    let selectedModalDocId = null;
+
+    // Utilidad para obtener fecha y hora actual formateada
+    function getNowFormatted() {
+      const now = new Date();
+      const pad = (n) => String(n).padStart(2, '0');
+      const dateStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+      const timeStr = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+      const fullStr = `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()} ${timeStr}:${pad(now.getSeconds())}`;
+      return { dateStr, timeStr, fullStr, isoLocal: `${dateStr}T${timeStr}` };
+    }
+
+    // Datos iniciales de demostración si es la primera vez que se abre la app
+    function seedInitialDataIfEmpty() {
+      const savedRecords = localStorage.getItem(STORAGE_KEYS.RECORDS);
+      const savedAudit = localStorage.getItem(STORAGE_KEYS.AUDIT);
+
+      if (!savedRecords) {
+        const sampleRecords = [
+          {
+            id: 'CHK-2026-1001',
+            branchCode: 'FLE',
+            branchName: 'FLE - Farmacia La Economía',
+            shift: 'Apertura',
+            date: '2026-11-16',
+            time: '07:15',
+            responsible: 'María Fernanda González',
+            createdBy: 'FLE',
+            createdAt: '16/11/2026 07:18:10',
+            status: 'Estado Inicial - Pendiente de Revisión',
+            resolutionDate: '',
+            initialIssue: 'Punto de venta #2 en caja principal tarda en conectar con el servidor bancario; resto de piso de ventas operativo.',
+            additionalProblem: '',
+            solutions: '',
+            compliancePercent: 95,
+            sections: [
+              {
+                title: 'A. Parte Operativa y Seguridad',
+                items: [
+                  { text: 'Inspección externa e interna de candados de seguridad, cerraduras y santamarías sin novedades.', status: 'Cumple', obs: 'Sin novedad' },
+                  { text: 'Verificación de funcionamiento de neveras de cadena de frío y registro de temperatura (2°C - 8°C).', status: 'Cumple', obs: '4.5°C registrada' }
+                ]
+              },
+              {
+                title: 'B. Cajas y Facturación',
+                items: [
+                  { text: 'Verificación de actualización de tasa cambiaria oficial (BCV) en el sistema de facturación.', status: 'Cumple', obs: 'Tasa actualizada' },
+                  { text: 'Prueba de encendido e impresión de impresoras fiscales, puntos de venta (POS) y Biopago.', status: 'No Cumple', obs: 'POS #2 con lentitud de red' }
+                ]
+              }
+            ],
+            adminNotes: [],
+            docHistory: [
+              { user: 'FLE', role: 'Sucursal', action: 'Creó y subió el checklist con Estado Inicial - Pendiente de Revisión', timestamp: '16/11/2026 07:18:10' }
+            ]
+          },
+          {
+            id: 'CHK-2026-1002',
+            branchCode: 'FPB',
+            branchName: 'FPB - Farmacia Plaza Bruzual',
+            shift: 'Cierre',
+            date: '2026-11-15',
+            time: '20:45',
+            responsible: 'Carlos Eduardo Mendoza',
+            createdBy: 'FPB',
+            createdAt: '15/11/2026 20:50:22',
+            status: 'En Revisión / Proceso',
+            resolutionDate: '',
+            initialIssue: 'Falta reposición de rollos térmicos de 80mm para impresora fiscal de caja 1.',
+            additionalProblem: 'Se verificó inventario central y se asignaron 2 cajas de rollos térmicos para despacho prioritario.',
+            solutions: 'Préstamo temporal de 6 rollos desde sucursal cercana mientras llega el despacho programado.',
+            compliancePercent: 94,
+            sections: [
+              {
+                title: 'B. Cajas y Facturación',
+                items: [
+                  { text: 'Ejecución de cierre de lotes en todos los puntos de venta (POS) y equipos Biopago.', status: 'Cumple', obs: 'Lotes cerrados OK' },
+                  { text: 'Emisión de Reporte Z / cierre fiscal diario en cada caja operativa.', status: 'Cumple', obs: 'Reporte Z archivado' }
+                ]
+              }
+            ],
+            adminNotes: [
+              { author: 'WFIGUEREDO', role: 'Administrador', text: 'Se coordina envío de papelería fiscal a primera hora del turno de mañana.', timestamp: '15/11/2026 21:15:04' }
+            ],
+            docHistory: [
+              { user: 'FPB', role: 'Sucursal', action: 'Creó y subió el checklist con Estado Inicial - Pendiente de Revisión', timestamp: '15/11/2026 20:50:22' },
+              { user: 'WFIGUEREDO', role: 'Administrador', action: 'Cambió estatus a "En Revisión / Proceso" y añadió respuesta administrativa', timestamp: '15/11/2026 21:15:04' }
+            ]
+          }
+        ];
+        localStorage.setItem(STORAGE_KEYS.RECORDS, JSON.stringify(sampleRecords));
+      }
+
+      if (!savedAudit) {
+        const sampleAudit = [
+          {
+            id: 'AUD-1',
+            user: 'FLE',
+            role: 'Sucursal',
+            action: 'Subió nuevo Checklist de Apertura (CHK-2026-1001) en Estado Inicial',
+            docId: 'CHK-2026-1001',
+            timestamp: '16/11/2026 07:18:10'
+          },
+          {
+            id: 'AUD-2',
+            user: 'WFIGUEREDO',
+            role: 'Administrador',
+            action: 'Actualizó estatus a "En Revisión / Proceso" y registró solución en CHK-2026-1002',
+            docId: 'CHK-2026-1002',
+            timestamp: '15/11/2026 21:15:04'
+          }
+        ];
+        localStorage.setItem(STORAGE_KEYS.AUDIT, JSON.stringify(sampleAudit));
+      }
+
+      records = JSON.parse(localStorage.getItem(STORAGE_KEYS.RECORDS) || '[]');
+      auditLogs = JSON.parse(localStorage.getItem(STORAGE_KEYS.AUDIT) || '[]');
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEYS.RECORDS, JSON.stringify(records));
+      localStorage.setItem(STORAGE_KEYS.AUDIT, JSON.stringify(auditLogs));
+      updateBadges();
+    }
+
+    /**
+     * 4. SISTEMA DE NOTIFICACIONES EMERGENTES (TOAST) Y BITÁCORA DE AUDITORÍA
+     */
+    function showToast(title, message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+
+      const styles = {
+        success: 'bg-white border-l-4 border-emerald-500 text-slate-800',
+        info:    'bg-white border-l-4 border-brand-cyan text-slate-800',
+        warning: 'bg-white border-l-4 border-amber-500 text-slate-800',
+        admin:   'bg-brand-navy border-l-4 border-brand-cyan text-white'
+      };
+
+      const iconName = {
+        success: 'check-circle-2',
+        info:    'bell',
+        warning: 'alert-triangle',
+        admin:   'shield-check'
+      }[type] || 'bell';
+
+      const iconColor = {
+        success: 'text-emerald-500',
+        info:    'text-brand-cyan',
+        warning: 'text-amber-500',
+        admin:   'text-brand-cyan'
+      }[type] || 'text-brand-cyan';
+
+      toast.className = `toast-enter pointer-events-auto rounded-xl shadow-xl p-3.5 border border-slate-200/80 flex items-start gap-3 ${styles[type] || styles.info}`;
+      toast.innerHTML = `
+        <i data-lucide="${iconName}" class="w-5 h-5 shrink-0 mt-0.5 ${iconColor}"></i>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs font-bold leading-snug">${title}</p>
+          <p class="text-[11px] opacity-90 mt-0.5 leading-snug">${message}</p>
+        </div>
+      `;
+
+      container.appendChild(toast);
+      lucide.createIcons({ nodes: [toast] });
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(110%)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 4500);
+    }
+
+    function logMovement(actionDescription, docId = 'SISTEMA', toastType = 'info', silentForBranch = false) {
+      if (!currentUser) return;
+      const { fullStr } = getNowFormatted();
+
+      const entry = {
+        id: 'AUD-' + Date.now(),
+        user: currentUser.username,
+        role: currentUser.role,
+        action: actionDescription,
+        docId: docId,
+        timestamp: fullStr
+      };
+
+      auditLogs.unshift(entry);
+      saveState();
+
+      const isAdmin = currentUser.role === 'Administrador';
+      if (isAdmin) {
+        renderAuditLog();
+        // Notificación detallada de auditoría solo visible para administradores
+        showToast(
+          `Movimiento registrado • Usuario: ${currentUser.username} (${currentUser.role})`,
+          `${actionDescription} [${fullStr}]`,
+          toastType
+        );
+      } else if (!silentForBranch) {
+        // Confirmación operativa simple para usuarios de sucursal sin exponer la bitácora de auditoría
+        showToast(
+          'Operación Confirmada',
+          `${actionDescription}`,
+          toastType
+        );
+      }
+    }
+
+    /**
+     * 5. AUTENTICACIÓN Y MANEJO DE SESIÓN
+     */
+    function handleLogin(e) {
+      e.preventDefault();
+      const rawUser = document.getElementById('login-username').value.trim().toUpperCase();
+      const rawPass = document.getElementById('login-password').value.trim();
+      const errorBox = document.getElementById('login-error');
+      const errorText = document.getElementById('login-error-text');
+
+      const userRecord = USERS_DB[rawUser];
+      if (!userRecord || userRecord.password !== rawPass) {
+        errorText.textContent = 'Credenciales inválidas. Verifique el usuario y la contraseña.';
+        errorBox.classList.remove('hidden');
+        return;
+      }
+
+      errorBox.classList.add('hidden');
+      currentUser = {
+        username: rawUser,
+        role: userRecord.role,
+        branchCode: userRecord.branchCode,
+        branchName: userRecord.branchName
+      };
+
+      localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(currentUser));
+      initAppForUser();
+      logMovement(`Inició sesión en el sistema (${currentUser.branchName})`, 'SESIÓN', currentUser.role === 'Administrador' ? 'admin' : 'success');
+    }
+
+    function handleLogout() {
+      if (currentUser) {
+        logMovement('Cerró sesión en el sistema', 'SESIÓN', 'info', true);
+      }
+      currentUser = null;
+      localStorage.removeItem(STORAGE_KEYS.SESSION);
+      document.getElementById('app-screen').classList.add('hidden');
+      document.getElementById('login-screen').classList.remove('hidden');
+      document.getElementById('login-password').value = '';
+    }
+
+    function initAppForUser() {
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('app-screen').classList.remove('hidden');
+
+      const isAdmin = currentUser.role === 'Administrador';
+
+      // Control estricto de visibilidad para "Notificaciones y Auditoría" (Solo Administradores)
+      const auditTabBtn = document.getElementById('nav-tab-audit');
+      const auditViewPanel = document.getElementById('view-audit-log');
+      if (isAdmin) {
+        auditTabBtn.classList.remove('hidden');
+        auditTabBtn.classList.add('flex');
+      } else {
+        auditTabBtn.classList.add('hidden');
+        auditTabBtn.classList.remove('flex');
+        auditViewPanel.classList.add('hidden');
+      }
+
+      // Actualizar barra superior
+      document.getElementById('header-username').textContent = currentUser.username;
+      const roleBadge = document.getElementById('header-role-badge');
+      roleBadge.textContent = currentUser.role;
+      roleBadge.className = isAdmin
+        ? 'px-2 py-0.5 rounded-md text-[10px] font-bold uppercase bg-amber-400 text-brand-navyDark'
+        : 'px-2 py-0.5 rounded-md text-[10px] font-bold uppercase bg-brand-cyan text-white';
+
+      document.getElementById('header-branch-name').textContent = currentUser.branchName;
+
+      // Configurar permisos en el formulario según rol
+      const branchSelect = document.getElementById('form-branch');
+      const branchHint = document.getElementById('branch-lock-hint');
+      const initialStatusSelect = document.getElementById('form-initial-status');
+      const statusLockBadge = document.getElementById('status-lock-badge');
+
+      if (!isAdmin) {
+        branchSelect.value = currentUser.branchCode;
+        branchSelect.disabled = true;
+        branchHint.classList.remove('hidden');
+
+        // Bloquear modificación de estatus inicial para sucursales
+        initialStatusSelect.value = 'Estado Inicial - Pendiente de Revisión';
+        initialStatusSelect.disabled = true;
+        statusLockBadge.innerHTML = '<i data-lucide="lock" class="w-3 h-3"></i> Bloqueado (Solo Admin)';
+
+        // Ajustar etiquetas del panel de control en modo consulta
+        document.getElementById('tab-admin-label').textContent = 'Mis Registros Enviados';
+        document.getElementById('role-banner-title').textContent = 'Historial de Checklists de Sucursal';
+        document.getElementById('role-banner-desc').textContent = 'Consulte el estado de sus documentos enviados y las respuestas de los administradores. (Solo lectura)';
+        document.getElementById('admin-badge-pill').innerHTML = '<i data-lucide="eye" class="w-4 h-4 text-brand-navy"></i><span>Modo Consulta (Sucursal)</span>';
+        document.getElementById('admin-badge-pill').className = 'inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 border border-slate-300 text-slate-700 text-xs font-bold self-start sm:self-center';
+      } else {
+        // Administrador: puede elegir cualquier sucursal y editar estatus
+        branchSelect.disabled = false;
+        branchHint.classList.add('hidden');
+
+        initialStatusSelect.value = 'Estado Inicial - Pendiente de Revisión';
+        initialStatusSelect.disabled = false;
+        statusLockBadge.innerHTML = '<i data-lucide="unlock" class="w-3 h-3"></i> Editable por Admin';
+
+        document.getElementById('tab-admin-label').textContent = 'Panel de Control Administradores';
+        document.getElementById('role-banner-title').textContent = 'Panel de Control de Administradores';
+        document.getElementById('role-banner-desc').textContent = 'Modifique estatus de documentos, asigne fechas de resolución, agregue anotaciones e incorpore soluciones.';
+        document.getElementById('admin-badge-pill').innerHTML = '<i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i><span>Permisos de Administrador Activos</span>';
+        document.getElementById('admin-badge-pill').className = 'inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold self-start sm:self-center';
+      }
+
+      // Establecer fecha y hora actual por defecto en el formulario
+      const { dateStr, timeStr } = getNowFormatted();
+      document.getElementById('form-date').value = dateStr;
+      document.getElementById('form-time').value = timeStr;
+
+      // Garantizar que siempre inicie en la pestaña principal de Checklist
+      switchTab('checklist');
+      renderChecklistSections();
+      renderAdminDashboard();
+      if (isAdmin) {
+        renderAuditLog();
+      }
+      updateBadges();
+      lucide.createIcons();
+    }
+
+    /**
+     * 6. RENDERIZADO Y LÓGICA DEL FORMULARIO DE CHECKLIST
+     */
+    function setShiftMode(shift) {
+      currentShift = shift;
+      const btnAp = document.getElementById('btn-shift-apertura');
+      const btnCi = document.getElementById('btn-shift-cierre');
+
+      if (shift === 'Apertura') {
+        btnAp.className = 'px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition cursor-pointer bg-brand-navy text-white shadow';
+        btnCi.className = 'px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition cursor-pointer text-slate-600 hover:text-brand-navy';
+      } else {
+        btnCi.className = 'px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition cursor-pointer bg-brand-navy text-white shadow';
+        btnAp.className = 'px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition cursor-pointer text-slate-600 hover:text-brand-navy';
+      }
+
+      renderChecklistSections();
+    }
+
+    function renderChecklistSections() {
+      const container = document.getElementById('checklist-sections-container');
+      const sections = CHECKLIST_TEMPLATES[currentShift];
+      container.innerHTML = '';
+
+      sections.forEach((sec, sIdx) => {
+        const card = document.createElement('div');
+        card.className = 'bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden';
+
+        let itemsHtml = '';
+        sec.items.forEach((itemText, iIdx) => {
+          const itemKey = `s${sIdx}_i${iIdx}`;
+          itemsHtml += `
+            <div class="p-4 sm:px-6 hover:bg-slate-50/80 transition flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+              <div class="flex items-start gap-3 flex-1">
+                <span class="w-6 h-6 rounded-lg bg-brand-navy/10 text-brand-navy font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                  ${iIdx + 1}
+                </span>
+                <p class="text-xs sm:text-sm font-medium text-slate-800 leading-relaxed">${itemText}</p>
+              </div>
+
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 shrink-0">
+                <!-- Botones de estado: Cumple / No Cumple / N/A -->
+                <div class="inline-flex rounded-xl border border-slate-200 bg-slate-100 p-1 self-start sm:self-center" role="group">
+                  <label class="cursor-pointer">
+                    <input type="radio" name="${itemKey}" value="Cumple" class="peer sr-only checklist-radio" onchange="updateChecklistProgress()" />
+                    <span class="px-3 py-1.5 rounded-lg text-xs font-bold block text-slate-600 peer-checked:bg-emerald-600 peer-checked:text-white transition">
+                      Cumple
+                    </span>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="radio" name="${itemKey}" value="No Cumple" class="peer sr-only checklist-radio" onchange="updateChecklistProgress()" />
+                    <span class="px-3 py-1.5 rounded-lg text-xs font-bold block text-slate-600 peer-checked:bg-red-600 peer-checked:text-white transition">
+                      No Cumple
+                    </span>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="radio" name="${itemKey}" value="N/A" class="peer sr-only checklist-radio" onchange="updateChecklistProgress()" />
+                    <span class="px-2.5 py-1.5 rounded-lg text-xs font-bold block text-slate-600 peer-checked:bg-slate-600 peer-checked:text-white transition">
+                      N/A
+                    </span>
+                  </label>
+                </div>
+
+                <!-- Observación puntual del ítem -->
+                <input
+                  type="text"
+                  data-obs-for="${itemKey}"
+                  placeholder="Observación (opcional)..."
+                  class="w-full sm:w-52 px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-cyan"
+                />
+              </div>
+            </div>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="bg-slate-50 border-b border-slate-200/80 px-5 sm:px-6 py-3.5 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-brand-navy text-brand-cyan flex items-center justify-center">
+                <i data-lucide="${sec.icon}" class="w-4 h-4"></i>
+              </div>
+              <h3 class="text-sm sm:text-base font-extrabold text-brand-navy">${sec.title}</h3>
+            </div>
+            <span class="text-xs font-semibold text-slate-500">${sec.items.length} puntos</span>
+          </div>
+          <div class="divide-y divide-slate-100">
+            ${itemsHtml}
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      updateChecklistProgress();
+      lucide.createIcons({ nodes: [container] });
+    }
+
+    function updateChecklistProgress() {
+      const sections = CHECKLIST_TEMPLATES[currentShift];
+      let totalItems = 0;
+      let answeredCount = 0;
+      let cumpleCount = 0;
+      let applicableCount = 0;
+
+      sections.forEach((sec, sIdx) => {
+        sec.items.forEach((_, iIdx) => {
+          totalItems++;
+          const selected = document.querySelector(`input[name="s${sIdx}_i${iIdx}"]:checked`);
+          if (selected) {
+            answeredCount++;
+            if (selected.value !== 'N/A') {
+              applicableCount++;
+              if (selected.value === 'Cumple') cumpleCount++;
+            }
+          }
+        });
+      });
+
+      const progressPct = totalItems > 0 ? Math.round((answeredCount / totalItems) * 100) : 0;
+      const compliancePct = applicableCount > 0 ? Math.round((cumpleCount / applicableCount) * 100) : 0;
+
+      document.getElementById('progress-count-text').textContent = `${answeredCount} de ${totalItems} ítems evaluados`;
+      document.getElementById('compliance-percent').textContent = `${compliancePct}%`;
+      document.getElementById('progress-bar-fill').style.width = `${progressPct}%`;
+    }
+
+    function markAllItemsCumple() {
+      const sections = CHECKLIST_TEMPLATES[currentShift];
+      sections.forEach((sec, sIdx) => {
+        sec.items.forEach((_, iIdx) => {
+          const radio = document.querySelector(`input[name="s${sIdx}_i${iIdx}"][value="Cumple"]`);
+          if (radio) radio.checked = true;
+        });
+      });
+      updateChecklistProgress();
+      showToast('Ítems completados', 'Se marcaron todos los puntos del turno como "Cumple".', 'info');
+    }
+
+    function handleChecklistSubmit(e) {
+      e.preventDefault();
+      const responsible = document.getElementById('form-responsible').value.trim();
+      const dateVal = document.getElementById('form-date').value;
+      const timeVal = document.getElementById('form-time').value;
+      const branchCode = document.getElementById('form-branch').value;
+      const issuesText = document.getElementById('form-issues').value.trim();
+      const initialStatus = currentUser.role === 'Administrador'
+        ? document.getElementById('form-initial-status').value
+        : 'Estado Inicial - Pendiente de Revisión';
+
+      if (!responsible) {
+        showToast('Campo requerido', 'Por favor indique el nombre del responsable o anfitriona de turno.', 'warning');
+        return;
+      }
+
+      const sectionsTemplate = CHECKLIST_TEMPLATES[currentShift];
+      let totalItems = 0;
+      let answeredCount = 0;
+      let cumpleCount = 0;
+      let applicableCount = 0;
+
+      const compiledSections = sectionsTemplate.map((sec, sIdx) => {
+        const compiledItems = sec.items.map((itemText, iIdx) => {
+          totalItems++;
+          const key = `s${sIdx}_i${iIdx}`;
+          const checkedEl = document.querySelector(`input[name="${key}"]:checked`);
+          const obsEl = document.querySelector(`input[data-obs-for="${key}"]`);
+          const val = checkedEl ? checkedEl.value : 'Sin evaluar';
+
+          if (checkedEl) {
+            answeredCount++;
+            if (val !== 'N/A') {
+              applicableCount++;
+              if (val === 'Cumple') cumpleCount++;
+            }
+          }
+
+          return {
+            text: itemText,
+            status: val,
+            obs: obsEl ? obsEl.value.trim() : ''
+          };
+        });
+
+        return {
+          title: sec.title,
+          items: compiledItems
+        };
+      });
+
+      if (answeredCount < totalItems) {
+        showToast(
+          'Checklist incompleto',
+          `Faltan ${totalItems - answeredCount} puntos por evaluar. Complete todos los ítems antes de enviar.`,
+          'warning'
+        );
+        return;
+      }
+
+      const compliancePercent = applicableCount > 0 ? Math.round((cumpleCount / applicableCount) * 100) : 100;
+      const { fullStr } = getNowFormatted();
+      const newDocId = `CHK-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+      const newRecord = {
+        id: newDocId,
+        branchCode: branchCode,
+        branchName: BRANCHES_MAP[branchCode] || branchCode,
+        shift: currentShift,
+        date: dateVal,
+        time: timeVal,
+        responsible: responsible,
+        createdBy: currentUser.username,
+        createdAt: fullStr,
+        status: initialStatus,
+        resolutionDate: '',
+        initialIssue: issuesText || 'Sin novedades críticas reportadas en el turno.',
+        additionalProblem: '',
+        solutions: '',
+        compliancePercent: compliancePercent,
+        sections: compiledSections,
+        adminNotes: [],
+        docHistory: [
+          {
+            user: currentUser.username,
+            role: currentUser.role,
+            action: `Subió el Checklist de ${currentShift} con estatus "${initialStatus}"`,
+            timestamp: fullStr
+          }
+        ]
+      };
+
+      records.unshift(newRecord);
+      saveState();
+
+      // Registrar movimiento y notificar
+      logMovement(
+        `Registró Checklist de ${currentShift} (${BRANCHES_MAP[branchCode]}) con ${initialStatus}`,
+        newDocId,
+        'success'
+      );
+
+      // Limpiar campos del formulario para un próximo registro
+      document.getElementById('form-responsible').value = '';
+      document.getElementById('form-issues').value = '';
+      renderChecklistSections();
+      renderAdminDashboard();
+
+      // Cambiar automáticamente a la pestaña de registros para ver el documento creado
+      switchTab('admin-panel');
+    }
+
+    /**
+     * 7. PANEL DE CONTROL DE ADMINISTRADORES Y LISTADO DE DOCUMENTOS
+     */
+    function getStatusBadgeClass(status) {
+      if (status.includes('Pendiente') || status.includes('Inicial')) {
+        return 'bg-amber-100 text-amber-800 border-amber-300';
+      }
+      if (status.includes('Proceso') || status.includes('Revisión')) {
+        return 'bg-sky-100 text-brand-navy border-sky-300';
+      }
+      if (status.includes('Observado')) {
+        return 'bg-red-100 text-red-800 border-red-300';
+      }
+      return 'bg-emerald-100 text-emerald-800 border-emerald-300';
+    }
+
+    function renderAdminDashboard() {
+      const listContainer = document.getElementById('submissions-list');
+      const filterBranch = document.getElementById('filter-branch').value;
+      const filterShift = document.getElementById('filter-shift').value;
+      const filterStatus = document.getElementById('filter-status').value;
+      const filterSearch = document.getElementById('filter-search').value.trim().toLowerCase();
+
+      // Si es usuario de sucursal, filtrar por defecto o restringir vista a su sucursal
+      let visibleRecords = [...records];
+      if (currentUser && currentUser.role === 'Sucursal') {
+        visibleRecords = visibleRecords.filter(r => r.branchCode === currentUser.branchCode);
+        document.getElementById('filter-branch').value = currentUser.branchCode;
+        document.getElementById('filter-branch').disabled = true;
+      } else {
+        document.getElementById('filter-branch').disabled = false;
+      }
+
+      // Actualizar KPIs con los registros visibles para el rol
+      document.getElementById('kpi-total').textContent = visibleRecords.length;
+      document.getElementById('kpi-pending').textContent = visibleRecords.filter(r => r.status.includes('Inicial')).length;
+      document.getElementById('kpi-inprogress').textContent = visibleRecords.filter(r => r.status.includes('Proceso') || r.status.includes('Observado')).length;
+      document.getElementById('kpi-resolved').textContent = visibleRecords.filter(r => r.status.includes('Resuelto')).length;
+
+      // Aplicar filtros seleccionados
+      const filtered = visibleRecords.filter(r => {
+        if (filterBranch !== 'ALL' && r.branchCode !== filterBranch) return false;
+        if (filterShift !== 'ALL' && r.shift !== filterShift) return false;
+        if (filterStatus !== 'ALL' && r.status !== filterStatus) return false;
+        if (filterSearch) {
+          const hay = `${r.id} ${r.responsible} ${r.branchName} ${r.initialIssue}`.toLowerCase();
+          if (!hay.includes(filterSearch)) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        listContainer.innerHTML = `
+          <div class="bg-white rounded-2xl border border-slate-200 p-10 text-center">
+            <i data-lucide="folder-open" class="w-10 h-10 text-slate-300 mx-auto mb-2"></i>
+            <p class="text-sm font-bold text-slate-700">No se encontraron registros con los filtros actuales</p>
+            <p class="text-xs text-slate-400 mt-1">Intente cambiar los filtros o registre un nuevo checklist.</p>
+          </div>
+        `;
+        lucide.createIcons({ nodes: [listContainer] });
+        return;
+      }
+
+      listContainer.innerHTML = filtered.map(doc => {
+        const badgeClass = getStatusBadgeClass(doc.status);
+        const shiftBadge = doc.shift === 'Apertura'
+          ? '<span class="px-2.5 py-0.5 rounded-lg text-[11px] font-bold bg-sky-100 text-brand-navy">☀ Apertura</span>'
+          : '<span class="px-2.5 py-0.5 rounded-lg text-[11px] font-bold bg-indigo-100 text-indigo-900">🌙 Cierre</span>';
+
+        const isAdmin = currentUser && currentUser.role === 'Administrador';
+        const actionBtnLabel = isAdmin ? 'Gestionar / Modificar' : 'Ver Documento';
+        const actionBtnIcon = isAdmin ? 'edit-3' : 'eye';
+
+        return `
+          <div class="bg-white rounded-2xl border border-slate-200/90 hover:border-brand-cyan/60 shadow-xs hover:shadow-md transition p-4 sm:p-5">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+              <div class="space-y-1.5 flex-1">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="font-mono text-xs font-extrabold px-2.5 py-0.5 rounded-lg bg-brand-navy text-white">${doc.id}</span>
+                  ${shiftBadge}
+                  <span class="px-2.5 py-0.5 rounded-lg text-[11px] font-bold border ${badgeClass}">
+                    ${doc.status}
+                  </span>
+                  <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-lg">
+                    ${doc.compliancePercent}% Cumplimiento
+                  </span>
+                </div>
+
+                <h3 class="text-base font-extrabold text-brand-navy">${doc.branchName}</h3>
+
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500">
+                  <span><strong>Fecha:</strong> ${doc.date} (${doc.time})</span>
+                  <span><strong>Responsable:</strong> ${doc.responsible}</span>
+                  <span><strong>Subido por:</strong> <span class="text-brand-navy font-semibold">${doc.createdBy}</span></span>
+                  ${doc.resolutionDate ? `<span class="text-emerald-700 font-semibold"><strong>Resuelto:</strong> ${doc.resolutionDate.replace('T', ' ')}</span>` : ''}
+                </div>
+
+                <p class="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100 mt-2 line-clamp-2">
+                  <strong>Novedad:</strong> ${doc.initialIssue}
+                </p>
+              </div>
+
+              <div class="flex sm:flex-row lg:flex-col items-stretch sm:items-center lg:items-end justify-between gap-2 shrink-0 pt-2 lg:pt-0 border-t lg:border-t-0 border-slate-100">
+                <span class="text-[11px] text-slate-400">
+                  ${doc.adminNotes.length} anotación(es)
+                </span>
+                <button
+                  type="button"
+                  onclick="openDocumentModal('${doc.id}')"
+                  class="px-4 py-2.5 rounded-xl bg-brand-navy hover:bg-brand-navyLight text-white text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer shadow-sm"
+                >
+                  <i data-lucide="${actionBtnIcon}" class="w-3.5 h-3.5 text-brand-cyan"></i>
+                  <span>${actionBtnLabel}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons({ nodes: [listContainer] });
+    }
+
+    /**
+     * 8. MODAL DE GESTIÓN ADMINISTRATIVA Y DETALLE DEL DOCUMENTO
+     */
+    function openDocumentModal(docId) {
+      const doc = records.find(r => r.id === docId);
+      if (!doc) return;
+
+      selectedModalDocId = docId;
+      const isAdmin = currentUser && currentUser.role === 'Administrador';
+
+      document.getElementById('modal-doc-id').textContent = doc.id;
+      document.getElementById('modal-doc-shift').textContent = `Checklist de ${doc.shift}`;
+      document.getElementById('modal-doc-branch').textContent = doc.branchName;
+
+      document.getElementById('modal-meta-datetime').textContent = `${doc.date} • ${doc.time}`;
+      document.getElementById('modal-meta-responsible').textContent = doc.responsible;
+      document.getElementById('modal-meta-creator').textContent = `${doc.createdBy} (${doc.createdAt})`;
+      document.getElementById('modal-meta-compliance').textContent = `${doc.compliancePercent}%`;
+
+      // Campos administrativos
+      const statusSelect = document.getElementById('modal-status-select');
+      const resDateInput = document.getElementById('modal-resolution-date');
+      const btnToday = document.getElementById('btn-set-now-resolution');
+      const issueInput = document.getElementById('modal-initial-issue');
+      const addProbInput = document.getElementById('modal-additional-problem');
+      const solInput = document.getElementById('modal-solutions');
+      const addNoteBox = document.getElementById('modal-add-note-box');
+      const saveBar = document.getElementById('modal-save-admin-bar');
+      const lockInfo = document.getElementById('modal-admin-lock-info');
+
+      statusSelect.value = doc.status;
+      resDateInput.value = doc.resolutionDate || '';
+      issueInput.value = doc.initialIssue || '';
+      addProbInput.value = doc.additionalProblem || '';
+      solInput.value = doc.solutions || '';
+
+      // Bloquear o habilitar controles estrictamente según rol Administrador
+      statusSelect.disabled = !isAdmin;
+      resDateInput.disabled = !isAdmin;
+      btnToday.disabled = !isAdmin;
+      issueInput.disabled = !isAdmin;
+      addProbInput.disabled = !isAdmin;
+      solInput.disabled = !isAdmin;
+
+      if (isAdmin) {
+        addNoteBox.classList.remove('hidden');
+        saveBar.classList.remove('hidden');
+        lockInfo.textContent = `Modo Administrador (${currentUser.username})`;
+        lockInfo.className = 'text-[11px] font-bold px-2.5 py-1 rounded-lg bg-brand-navy text-white';
+      } else {
+        addNoteBox.classList.add('hidden');
+        saveBar.classList.add('hidden');
+        lockInfo.textContent = 'Solo Lectura (Requiere Rol Administrador para modificar)';
+        lockInfo.className = 'text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-200 text-slate-700';
+      }
+
+      renderModalNotes(doc);
+      renderModalChecklistItems(doc);
+      renderModalDocHistory(doc);
+
+      document.getElementById('doc-modal').classList.remove('hidden');
+      lucide.createIcons({ nodes: [document.getElementById('doc-modal')] });
+    }
+
+    function renderModalNotes(doc) {
+      const container = document.getElementById('modal-notes-list');
+      if (!doc.adminNotes || doc.adminNotes.length === 0) {
+        container.innerHTML = '<p class="text-xs text-slate-400 italic">Aún no se han registrado anotaciones de respuesta.</p>';
+        return;
+      }
+
+      container.innerHTML = doc.adminNotes.map(n => `
+        <div class="bg-white border border-slate-200 rounded-xl p-3 text-xs">
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <span class="font-bold text-brand-navy flex items-center gap-1">
+              <i data-lucide="user-check" class="w-3.5 h-3.5 text-brand-cyan"></i>
+              ${n.author} (${n.role})
+            </span>
+            <span class="text-[11px] text-slate-400">${n.timestamp}</span>
+          </div>
+          <p class="text-slate-700">${n.text}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderModalChecklistItems(doc) {
+      const container = document.getElementById('modal-checklist-items');
+      container.innerHTML = doc.sections.map(sec => `
+        <div class="border border-slate-200 rounded-xl overflow-hidden">
+          <div class="bg-slate-100 px-3.5 py-2 text-xs font-bold text-brand-navy">${sec.title}</div>
+          <div class="divide-y divide-slate-100">
+            ${sec.items.map(it => {
+              const badge = it.status === 'Cumple'
+                ? 'bg-emerald-100 text-emerald-800'
+                : (it.status === 'No Cumple' ? 'bg-red-100 text-red-800' : 'bg-slate-200 text-slate-700');
+              return `
+                <div class="px-3.5 py-2 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                  <span class="text-slate-700">${it.text}</span>
+                  <div class="flex items-center gap-2 shrink-0">
+                    ${it.obs ? `<span class="text-[11px] text-slate-500 italic">"${it.obs}"</span>` : ''}
+                    <span class="px-2 py-0.5 rounded font-bold text-[11px] ${badge}">${it.status}</span>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderModalDocHistory(doc) {
+      const container = document.getElementById('modal-doc-history');
+      container.innerHTML = (doc.docHistory || []).map(h => `
+        <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-600 border-b border-slate-200/60 last:border-0 pb-1">
+          <span><strong class="text-brand-navy">${h.user}</strong> (${h.role}): ${h.action}</span>
+          <span class="text-slate-400">${h.timestamp}</span>
+        </div>
+      `).join('');
+    }
+
+    function handleAddAdminNote() {
+      if (!currentUser || currentUser.role !== 'Administrador') return;
+      const doc = records.find(r => r.id === selectedModalDocId);
+      if (!doc) return;
+
+      const input = document.getElementById('modal-new-note-input');
+      const noteText = input.value.trim();
+      if (!noteText) {
+        showToast('Nota vacía', 'Escriba el contenido de la anotación antes de agregarla.', 'warning');
+        return;
+      }
+
+      const { fullStr } = getNowFormatted();
+      doc.adminNotes.push({
+        author: currentUser.username,
+        role: currentUser.role,
+        text: noteText,
+        timestamp: fullStr
+      });
+
+      doc.docHistory.unshift({
+        user: currentUser.username,
+        role: currentUser.role,
+        action: `Agregó anotación de respuesta: "${noteText}"`,
+        timestamp: fullStr
+      });
+
+      input.value = '';
+      saveState();
+      renderModalNotes(doc);
+      renderModalDocHistory(doc);
+      renderAdminDashboard();
+      lucide.createIcons({ nodes: [document.getElementById('doc-modal')] });
+
+      logMovement(`Añadió anotación de respuesta en documento ${doc.id}`, doc.id, 'admin');
+    }
+
+    function handleSaveAdminChanges() {
+      if (!currentUser || currentUser.role !== 'Administrador') {
+        showToast('Acceso Denegado', 'Solo los administradores pueden modificar el estatus o resolución.', 'warning');
+        return;
+      }
+
+      const doc = records.find(r => r.id === selectedModalDocId);
+      if (!doc) return;
+
+      const newStatus = document.getElementById('modal-status-select').value;
+      const newResDate = document.getElementById('modal-resolution-date').value;
+      const updatedIssue = document.getElementById('modal-initial-issue').value.trim();
+      const addProblem = document.getElementById('modal-additional-problem').value.trim();
+      const solutions = document.getElementById('modal-solutions').value.trim();
+
+      const changes = [];
+      if (doc.status !== newStatus) changes.push(`estatus a "${newStatus}"`);
+      if (doc.resolutionDate !== newResDate && newResDate) changes.push(`fecha de resolución (${newResDate.replace('T', ' ')})`);
+      if (doc.additionalProblem !== addProblem && addProblem) changes.push('adicionales al problema');
+      if (doc.solutions !== solutions && solutions) changes.push('soluciones aplicadas');
+      if (doc.initialIssue !== updatedIssue) changes.push('descripción del problema');
+
+      doc.status = newStatus;
+      doc.resolutionDate = newResDate;
+      doc.initialIssue = updatedIssue;
+      doc.additionalProblem = addProblem;
+      doc.solutions = solutions;
+
+      const { fullStr } = getNowFormatted();
+      const summaryChange = changes.length > 0 ? changes.join(', ') : 'actualizó registro administrativo';
+
+      doc.docHistory.unshift({
+        user: currentUser.username,
+        role: currentUser.role,
+        action: `Modificó ${summaryChange}`,
+        timestamp: fullStr
+      });
+
+      saveState();
+      renderModalDocHistory(doc);
+      renderAdminDashboard();
+      lucide.createIcons({ nodes: [document.getElementById('doc-modal')] });
+
+      logMovement(`Actualizó ${doc.id}: ${summaryChange}`, doc.id, 'admin');
+    }
+
+    /**
+     * 9. BITÁCORA DE AUDITORÍA Y EXPORTACIÓN WHATSAPP
+     */
+    function renderAuditLog() {
+      const container = document.getElementById('audit-log-list');
+      if (auditLogs.length === 0) {
+        container.innerHTML = '<p class="py-8 text-center text-xs text-slate-400">Sin movimientos registrados aún.</p>';
+        return;
+      }
+
+      container.innerHTML = auditLogs.map(log => {
+        const isAdmin = log.role === 'Administrador';
+        const badgeStyle = isAdmin
+          ? 'bg-amber-100 text-amber-800 border-amber-300'
+          : 'bg-sky-100 text-brand-navy border-sky-200';
+
+        return `
+          <div class="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-xl ${isAdmin ? 'bg-brand-navy text-brand-cyan' : 'bg-slate-100 text-brand-navy'} flex items-center justify-center shrink-0 mt-0.5">
+                <i data-lucide="${isAdmin ? 'shield-check' : 'user'}" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="text-xs font-extrabold text-brand-navy">${log.user}</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${badgeStyle}">${log.role}</span>
+                  <span class="font-mono text-[11px] text-slate-400">[${log.docId}]</span>
+                </div>
+                <p class="text-xs text-slate-700 mt-0.5">${log.action}</p>
+              </div>
+            </div>
+            <span class="text-[11px] font-medium text-slate-400 sm:text-right shrink-0">${log.timestamp}</span>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons({ nodes: [container] });
+    }
+
+    function updateBadges() {
+      const pendingCount = records.filter(r => r.status.includes('Inicial') || r.status.includes('Pendiente')).length;
+      document.getElementById('pending-counter-badge').textContent = pendingCount;
+      document.getElementById('audit-counter-badge').textContent = auditLogs.length;
+    }
+
+    function copyWhatsappSummary() {
+      const doc = records.find(r => r.id === selectedModalDocId);
+      if (!doc) return;
+
+      const text = [
+        `*FARMACIAS LA ECONOMÍA - CHECKLIST ${doc.shift.toUpperCase()}*`,
+        `• *Documento:* ${doc.id}`,
+        `• *Sucursal:* ${doc.branchName}`,
+        `• *Fecha/Hora:* ${doc.date} ${doc.time}`,
+        `• *Responsable:* ${doc.responsible}`,
+        `• *Registrado por:* ${doc.createdBy}`,
+        `• *Cumplimiento:* ${doc.compliancePercent}%`,
+        `• *Estatus:* ${doc.status}`,
+        doc.resolutionDate ? `• *Fecha Resolución:* ${doc.resolutionDate.replace('T', ' ')}` : null,
+        `• *Novedades:* ${doc.initialIssue}`,
+        doc.additionalProblem ? `• *Adicional Problema:* ${doc.additionalProblem}` : null,
+        doc.solutions ? `• *Soluciones:* ${doc.solutions}` : null
+      ].filter(Boolean).join('\n');
+
+      // Uso compatible de clipboard en iFrame
+      const tempArea = document.createElement('textarea');
+      tempArea.value = text;
+      document.body.appendChild(tempArea);
+      tempArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempArea);
+
+      showToast('Resumen Copiado', 'El reporte formateado para WhatsApp se copió al portapapeles.', 'success');
+    }
+
+    /**
+     * 10. NAVEGACIÓN POR PESTAÑAS Y EVENT LISTENERS
+     */
+    function switchTab(tabName) {
+      // Bloquear acceso a la vista de Auditoría y Notificaciones si no es Administrador
+      if (tabName === 'audit-log' && (!currentUser || currentUser.role !== 'Administrador')) {
+        tabName = 'checklist';
+      }
+
+      document.querySelectorAll('.nav-tab').forEach(btn => {
+        const isHiddenTab = btn.id === 'nav-tab-audit' && (!currentUser || currentUser.role !== 'Administrador');
+        const displayClass = isHiddenTab ? 'hidden' : 'flex';
+
+        if (btn.dataset.tab === tabName) {
+          btn.className = `nav-tab active-tab ${displayClass} px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold items-center gap-2 whitespace-nowrap transition cursor-pointer bg-brand-cyan text-white shadow-sm`;
+        } else {
+          btn.className = `nav-tab ${displayClass} px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold items-center gap-2 whitespace-nowrap transition cursor-pointer text-sky-100 hover:bg-white/10`;
+        }
+      });
+
+      document.getElementById('view-checklist').classList.toggle('hidden', tabName !== 'checklist');
+      document.getElementById('view-admin-panel').classList.toggle('hidden', tabName !== 'admin-panel');
+      document.getElementById('view-audit-log').classList.toggle('hidden', tabName !== 'audit-log' || currentUser?.role !== 'Administrador');
+
+      if (tabName === 'admin-panel') renderAdminDashboard();
+      if (tabName === 'audit-log' && currentUser?.role === 'Administrador') renderAuditLog();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      seedInitialDataIfEmpty();
+      lucide.createIcons();
+
+      // Eventos de Login
+      document.getElementById('login-form').addEventListener('submit', handleLogin);
+      document.getElementById('logout-btn').addEventListener('click', handleLogout);
+
+      document.getElementById('toggle-password').addEventListener('click', () => {
+        const pwd = document.getElementById('login-password');
+        pwd.type = pwd.type === 'password' ? 'text' : 'password';
+      });
+
+      // Eventos de Pestañas
+      document.querySelectorAll('.nav-tab').forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+      });
+
+      // Eventos de Turno (Apertura / Cierre)
+      document.getElementById('btn-shift-apertura').addEventListener('click', () => setShiftMode('Apertura'));
+      document.getElementById('btn-shift-cierre').addEventListener('click', () => setShiftMode('Cierre'));
+
+      // Eventos del Formulario
+      document.getElementById('btn-mark-all-ok').addEventListener('click', markAllItemsCumple);
+      document.getElementById('btn-reset-form').addEventListener('click', () => {
+        document.getElementById('form-responsible').value = '';
+        document.getElementById('form-issues').value = '';
+        renderChecklistSections();
+      });
+      document.getElementById('checklist-form').addEventListener('submit', handleChecklistSubmit);
+
+      // Filtros del Panel de Control
+      ['filter-branch', 'filter-shift', 'filter-status'].forEach(id => {
+        document.getElementById(id).addEventListener('change', renderAdminDashboard);
+      });
+      document.getElementById('filter-search').addEventListener('input', renderAdminDashboard);
+
+      // Eventos del Modal
+      const closeModal = () => document.getElementById('doc-modal').classList.add('hidden');
+      document.getElementById('close-modal-btn').addEventListener('click', closeModal);
+      document.getElementById('close-modal-footer-btn').addEventListener('click', closeModal);
+
+      document.getElementById('btn-set-now-resolution').addEventListener('click', () => {
+        const { isoLocal } = getNowFormatted();
+        document.getElementById('modal-resolution-date').value = isoLocal;
+      });
+
+      document.getElementById('btn-add-admin-note').addEventListener('click', handleAddAdminNote);
+      document.getElementById('btn-save-admin-changes').addEventListener('click', handleSaveAdminChanges);
+      document.getElementById('btn-copy-whatsapp').addEventListener('click', copyWhatsappSummary);
+      document.getElementById('btn-print-doc').addEventListener('click', () => window.print());
+
+      // Restaurar sesión si estaba activa
+      const savedSession = localStorage.getItem(STORAGE_KEYS.SESSION);
+      if (savedSession) {
+        try {
+          currentUser = JSON.parse(savedSession);
+          if (currentUser && USERS_DB[currentUser.username]) {
+            initAppForUser();
+          }
+        } catch (err) {
+          localStorage.removeItem(STORAGE_KEYS.SESSION);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
