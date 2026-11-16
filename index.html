@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Registros - Farmacias La Economía</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;750&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; }
+        .bg-navy { background-color: #1B3664; }
+        .text-navy { color: #1B3664; }
+        .border-navy { border-color: #1B3664; }
+        .bg-cyan-custom { background-color: #00A8E8; }
+        .text-cyan-custom { color: #00A8E8; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- HEADER / NAVBAR -->
+    <header class="bg-navy text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <!-- Logotipo exacto FLE -->
+                <div class="w-10 h-10 bg-navy rounded flex items-center justify-center relative overflow-hidden border border-cyan-400">
+                    <svg viewBox="0 0 100 100" class="w-full h-full">
+                        <path d="M20 20 L40 20 L40 75 L80 75 L80 90 L20 90 Z" fill="white"/>
+                        <rect x="52" y="32" width="22" height="26" rx="4" fill="#009FE3"/>
+                        <path d="M63 24 V66 M42 45 H84" stroke="white" stroke-width="6"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wide">Farmacias La Economía</h1>
+                    <p class="text-xs text-cyan-200">Portal de Registros de Formularios y Documentos</p>
+                </div>
+            </div>
+            <div id="user-session-info" class="hidden flex items-center space-x-4 mt-2 sm:mt-0">
+                <span id="current-user-badge" class="bg-cyan-600 px-3 py-1 rounded-full text-xs font-semibold"></span>
+                <div class="flex space-x-2">
+                    <button onclick="exportBackup()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded text-xs font-medium flex items-center gap-1 transition">📥 Descargar Respaldo</button>
+                    <label class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded text-xs font-medium flex items-center gap-1 cursor-pointer transition">
+                        📤 Cargar Respaldo <input type="file" id="importFile" accept=".json" class="hidden" onchange="importBackup(event)">
+                    </label>
+                    <button onclick="logout()" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded text-xs font-medium transition">Cerrar Sesión</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- LOGIN VIEW -->
+        <div id="login-view" class="max-w-md mx-auto bg-white rounded-xl shadow-xl overflow-hidden border border-slate-200 mt-10">
+            <div class="bg-navy p-6 text-center text-white relative">
+                <div class="w-20 h-20 mx-auto mb-3 bg-white/10 rounded-full flex items-center justify-center p-2 border border-cyan-400">
+                    <svg viewBox="0 0 100 100" class="w-full h-full">
+                        <path d="M20 20 L40 20 L40 75 L80 75 L80 90 L20 90 Z" fill="white"/>
+                        <rect x="52" y="32" width="22" height="26" rx="4" fill="#009FE3"/>
+                        <path d="M63 24 V66 M42 45 H84" stroke="white" stroke-width="6"/>
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold">Acceso al Sistema</h2>
+                <p class="text-xs text-cyan-200 mt-1">Ingrese sus credenciales autorizadas</p>
+            </div>
+            <form id="login-form" onsubmit="handleLogin(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Usuario</label>
+                    <input type="text" id="login-user" required placeholder="Ej. FLE o WFIGUEREDO" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-navy uppercase">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Contraseña</label>
+                    <input type="password" id="login-pass" required placeholder="••••••••" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-navy">
+                </div>
+                <div id="login-error" class="text-red-500 text-xs hidden font-medium text-center">Usuario o contraseña incorrectos.</div>
+                <button type="submit" class="w-full bg-navy hover:bg-slate-800 text-white py-2.5 rounded-lg font-bold transition shadow-md">Ingresar al Portal</button>
+
+                <!-- Quick Test Credentials -->
+                <div class="mt-4 pt-4 border-t border-slate-100">
+                    <p class="text-xs text-slate-500 text-center mb-2 font-medium">Accesos Rápidos de Prueba:</p>
+                    <div class="flex flex-wrap gap-1 justify-center">
+                        <button type="button" onclick="fillCreds('FLE', 'J310226717')" class="text-[10px] bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded font-semibold text-slate-700">FLE (Sucursal)</button>
+                        <button type="button" onclick="fillCreds('WFIGUEREDO', '29910460')" class="text-[10px] bg-cyan-100 hover:bg-cyan-200 px-2 py-1 rounded font-semibold text-cyan-800">WFIGUEREDO (Admin)</button>
+                        <button type="button" onclick="fillCreds('OSUAREZ', '12527382')" class="text-[10px] bg-cyan-100 hover:bg-cyan-200 px-2 py-1 rounded font-semibold text-cyan-800">OSUAREZ (Admin)</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- APP DASHBOARD VIEW -->
+        <div id="app-view" class="hidden space-y-6">
+            
+            <!-- BRANCH PORTAL -->
+            <div id="branch-section" class="hidden space-y-6">
+                <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-navy">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold text-navy flex items-center gap-2">
+                            📝 Registro de Formulario o Documento
+                        </h2>
+                        <span id="branch-badge" class="bg-blue-100 text-navy px-3 py-1 rounded-full text-xs font-bold"></span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-6">Complete los datos requeridos para procesar la solicitud o soporte documental.</p>
+
+                    <form id="doc-form" onsubmit="submitDocument(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tipo de Registro *</label>
+                                <select id="doc-type" required onchange="generateTrackingCode()" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-navy">
+                                    <option value="">Seleccione tipo...</option>
+                                    <option value="Devolución de droguería">Devolución de droguería</option>
+                                    <option value="Devolución/vencido proveedor">Devolución/vencido proveedor</option>
+                                    <option value="Medicamentos próximos a vencer">Medicamentos próximos a vencer</option>
+                                    <option value="Misceláneos próximos a vencer">Misceláneos próximos a vencer</option>
+                                    <option value="Solicitud administrativa">Solicitud administrativa</option>
+                                    <option value="Solicitud de mantenimiento/operatividad">Solicitud de mantenimiento/operatividad</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Fecha del Registro *</label>
+                                <input type="date" id="doc-date" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-navy">
+                            </div>
+                        </div>
+
+                        <!-- Tracking Code Section (Horizontal Layout Cleaned) -->
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Código de Seguimiento (Automático)</label>
+                            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                                <input type="text" id="doc-tracking" readonly class="flex-grow px-4 py-2 bg-white font-mono font-bold text-navy border rounded-lg shadow-inner text-center sm:text-left" placeholder="Seleccione tipo de registro...">
+                                <button type="button" onclick="generateTrackingCode()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 transition">
+                                    🔄 Actualizar Folio
+                                </button>
+                            </div>
+                            <p class="text-[11px] text-slate-500 mt-1">Correlativo único generado automáticamente según el tipo de solicitud.</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Bitácora / Detalle de la Novedad *</label>
+                            <textarea id="doc-details" required rows="3" placeholder="Ingrese números de factura, guías de despacho, lotes, fechas de vencimiento o detalles del proveedor / droguería..." class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-navy"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Estado Inicial del Documento</label>
+                            <input type="text" value="Pendiente" disabled class="w-full px-4 py-2 bg-slate-100 text-slate-500 border rounded-lg font-semibold cursor-not-allowed">
+                            <p class="text-[11px] text-slate-500 mt-1">El estatus inicial es "Pendiente" y solo puede ser modificado por usuarios administradores.</p>
+                        </div>
+
+                        <button type="submit" class="w-full bg-navy hover:bg-slate-800 text-white py-3 rounded-lg font-bold transition shadow-md">Registrar Documento en el Sistema</button>
+                    </form>
+                </div>
+
+                <!-- BRANCH HISTORY TABLE -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-lg font-bold text-navy mb-4">Mis Registros Enviados</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-700 uppercase">
+                                    <th class="p-3">Código Seguimiento</th>
+                                    <th class="p-3">Tipo</th>
+                                    <th class="p-3">Fecha</th>
+                                    <th class="p-3">Detalle / Bitácora</th>
+                                    <th class="p-3">Estatus</th>
+                                    <th class="p-3">Resolución</th>
+                                </tr>
+                            </thead>
+                            <tbody id="branch-table-body" class="divide-y divide-slate-100">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADMIN CONTROL PANEL -->
+            <div id="admin-section" class="hidden space-y-6">
+                <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-cyan-500">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold text-navy flex items-center gap-2">
+                            👑 Panel de Control de Administradores
+                        </h2>
+                        <span class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-xs font-bold">Modo Gestión Total</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-6">Gestione estatus, fechas de resolución, anotaciones y notas adicionales de todos los registros del sistema.</p>
+
+                    <!-- FILTERS -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 bg-slate-50 p-4 rounded-lg">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Filtrar por Sucursal</label>
+                            <select id="filter-branch" onchange="renderAdminTable()" class="w-full px-3 py-1.5 border rounded text-xs">
+                                <option value="">Todas las sucursales</option>
+                                <option value="FLE">Sucursal FLE</option>
+                                <option value="FPB">Sucursal FPB</option>
+                                <option value="FEP">Sucursal FEP</option>
+                                <option value="FOU">Sucursal FOU</option>
+                                <option value="FSC">Sucursal FSC</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Filtrar por Estatus</label>
+                            <select id="filter-status" onchange="renderAdminTable()" class="w-full px-3 py-1.5 border rounded text-xs">
+                                <option value="">Todos los estatus</option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="En Proceso">En Proceso</option>
+                                <option value="Resuelto">Resuelto</option>
+                                <option value="Rechazado">Rechazado</option>
+                            </select>
+                        </div>
+                        <div class="flex items-end">
+                            <button onclick="resetFilters()" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 py-1.5 rounded text-xs font-bold transition">Limpiar Filtros</button>
+                        </div>
+                    </div>
+
+                    <!-- ADMIN TABLE -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-700 uppercase">
+                                    <th class="p-3">Sucursal</th>
+                                    <th class="p-3">Código Seguimiento</th>
+                                    <th class="p-3">Tipo</th>
+                                    <th class="p-3">Bitácora / Detalle</th>
+                                    <th class="p-3">Estatus</th>
+                                    <th class="p-3">Resolución</th>
+                                    <th class="p-3 text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-table-body" class="divide-y divide-slate-100">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- ADMIN EDIT MODAL -->
+    <div id="admin-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="font-bold text-navy text-lg" id="modal-title">Gestionar Documento</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 font-bold text-lg">&times;</button>
+            </div>
+            <form id="admin-edit-form" onsubmit="saveAdminEdit(event)" class="space-y-3">
+                <input type="hidden" id="edit-doc-id">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Modificar Estatus *</label>
+                    <select id="edit-status" required class="w-full px-3 py-2 border rounded-lg text-xs">
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="En Proceso">En Proceso</option>
+                        <option value="Resuelto">Resuelto</option>
+                        <option value="Rechazado">Rechazado</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Fecha de Resolución</label>
+                    <input type="date" id="edit-resolution-date" class="w-full px-3 py-2 border rounded-lg text-xs">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Anotaciones de Respuestas</label>
+                    <textarea id="edit-answer-notes" rows="2" placeholder="Ingrese anotaciones o respuestas al caso..." class="w-full px-3 py-2 border rounded-lg text-xs"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Incorporar Adicionales al Problema o Soluciones</label>
+                    <textarea id="edit-extra-notes" rows="2" placeholder="Notas adicionales de soporte o evoluciones..." class="w-full px-3 py-2 border rounded-lg text-xs"></textarea>
+                </div>
+                <div class="flex justify-end space-x-2 pt-3 border-t">
+                    <button type="button" onclick="closeModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-2 rounded-lg text-xs font-bold transition">Cancelar</button>
+                    <button type="submit" class="bg-navy hover:bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-bold transition">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t py-4 text-center text-xs text-slate-500 mt-8">
+        Farmacias La Economía C.A. &copy; 2026 - Portal de Registros y Control Administrativo
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Users database
+        const users = {
+            "FLE": { pass: "J310226717", type: "branch", name: "Sucursal FLE" },
+            "FPB": { pass: "J504943312", type: "branch", name: "Sucursal FPB" },
+            "FEP": { pass: "J404979719", type: "branch", name: "Sucursal FEP" },
+            "FOU": { pass: "J313596914", type: "branch", name: "Sucursal FOU" },
+            "FSC": { pass: "J314260065", type: "branch", name: "Sucursal FSC" },
+            "WFIGUEREDO": { pass: "29910460", type: "admin", name: "Willian Figueredo (Admin)" },
+            "OSUAREZ": { pass: "12527382", type: "admin", name: "O. Suárez (Admin)" }
+        };
+
+        let currentUser = null;
+        let documents = JSON.parse(localStorage.getItem('fle_documents')) || [];
+
+        function fillCreds(u, p) {
+            document.getElementById('login-user').value = u;
+            document.getElementById('login-pass').value = p;
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('login-user').value.trim().toUpperCase();
+            const p = document.getElementById('login-pass').value.trim();
+            const err = document.getElementById('login-error');
+
+            if (users[u] && users[u].pass === p) {
+                currentUser = { username: u, ...users[u] };
+                localStorage.setItem('fle_current_user', JSON.stringify(currentUser));
+                err.classList.add('hidden');
+                initApp();
+            } else {
+                err.classList.remove('hidden');
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('fle_current_user');
+            document.getElementById('login-view').classList.remove('hidden');
+            document.getElementById('app-view').classList.add('hidden');
+            document.getElementById('user-session-info').classList.add('hidden');
+            document.getElementById('login-form').reset();
+        }
+
+        function initApp() {
+            document.getElementById('login-view').classList.add('hidden');
+            document.getElementById('app-view').classList.remove('hidden');
+            document.getElementById('user-session-info').classList.remove('hidden');
+            
+            const badge = document.getElementById('current-user-badge');
+            badge.textContent = `${currentUser.name} (${currentUser.username})`;
+
+            if (currentUser.type === 'branch') {
+                document.getElementById('branch-section').classList.remove('hidden');
+                document.getElementById('admin-section').classList.add('hidden');
+                document.getElementById('doc-date').valueAsDate = new Date();
+                renderBranchTable();
+            } else {
+                document.getElementById('branch-section').classList.add('hidden');
+                document.getElementById('admin-section').classList.remove('hidden');
+                renderAdminTable();
+            }
+        }
+
+        // Generate automatic tracking code based on type
+        function generateTrackingCode() {
+            const type = document.getElementById('doc-type').value;
+            const trackingInput = document.getElementById('doc-tracking');
+            if (!type) {
+                trackingInput.value = "";
+                trackingInput.placeholder = "Seleccione tipo de registro primero...";
+                return;
+            }
+
+            let prefix = "DOC";
+            if (type.includes("Devolución de droguería")) prefix = "DEV-DRO";
+            else if (type.includes("Devolución/vencido proveedor")) prefix = "DEV-PRV";
+            else if (type.includes("Medicamentos próximos a vencer")) prefix = "VEN-MED";
+            else if (type.includes("Misceláneos próximos a vencer")) prefix = "VEN-MIS";
+            else if (type.includes("Solicitud administrativa")) prefix = "SOL-ADM";
+            else if (type.includes("Solicitud de mantenimiento")) prefix = "SOL-MAN";
+
+            const year = new Date().getFullYear();
+            // Count existing docs of this prefix for sequential numbering
+            const count = documents.filter(d => d.trackingCode && d.trackingCode.startsWith(`${prefix}-${year}`)).length + 1;
+            const seq = String(count).padStart(4, '0');
+
+            trackingInput.value = `${prefix}-${year}-${seq}`;
+        }
+
+        function submitDocument(e) {
+            e.preventDefault();
+            const type = document.getElementById('doc-type').value;
+            const date = document.getElementById('doc-date').value;
+            const trackingCode = document.getElementById('doc-tracking').value;
+            const details = document.getElementById('doc-details').value;
+
+            if (!trackingCode) {
+                alert("Por favor seleccione un tipo de registro válido para generar el código de seguimiento.");
+                return;
+            }
+
+            const newDoc = {
+                id: 'doc_' + Date.now(),
+                branch: currentUser.username,
+                branchName: currentUser.name,
+                type,
+                date,
+                trackingCode,
+                details,
+                status: 'Pendiente',
+                resolutionDate: '',
+                answerNotes: '',
+                extraNotes: '',
+                history: [{ user: currentUser.username, action: 'Creado', time: new Date().toLocaleString() }]
+            };
+
+            documents.unshift(newDoc);
+            localStorage.setItem('fle_documents', JSON.stringify(documents));
+
+            document.getElementById('doc-form').reset();
+            document.getElementById('doc-date').valueAsDate = new Date();
+            document.getElementById('doc-tracking').value = "";
+            renderBranchTable();
+            alert("¡Documento registrado exitosamente con el código " + trackingCode + "!");
+        }
+
+        function renderBranchTable() {
+            const tbody = document.getElementById('branch-table-body');
+            tbody.innerHTML = '';
+            const myDocs = documents.filter(d => d.branch === currentUser.username);
+
+            if (myDocs.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">No hay registros enviados todavía.</td></tr>`;
+                return;
+            }
+
+            myDocs.forEach(d => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-3 font-mono font-bold text-navy">${d.trackingCode}</td>
+                    <td class="p-3 font-semibold">${d.type}</td>
+                    <td class="p-3">${d.date}</td>
+                    <td class="p-3 max-w-xs truncate" title="${d.details}">${d.details}</td>
+                    <td class="p-3"><span class="px-2 py-1 rounded text-[10px] font-bold ${getStatusBadgeClass(d.status)}">${d.status}</span></td>
+                    <td class="p-3 text-slate-600">${d.resolutionDate || 'Pendiente'}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('admin-table-body');
+            tbody.innerHTML = '';
+
+            const fBranch = document.getElementById('filter-branch').value;
+            const fStatus = document.getElementById('filter-status').value;
+
+            let filtered = documents.filter(d => {
+                if (fBranch && d.branch !== fBranch) return false;
+                if (fStatus && d.status !== fStatus) return false;
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">No se encontraron registros con los filtros seleccionados.</td></tr>`;
+                return;
+            }
+
+            filtered.forEach(d => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-3 font-bold text-navy">${d.branchName}</td>
+                    <td class="p-3 font-mono font-bold text-slate-800">${d.trackingCode}</td>
+                    <td class="p-3 font-semibold">${d.type}</td>
+                    <td class="p-3 max-w-xs truncate" title="${d.details}">${d.details}</td>
+                    <td class="p-3"><span class="px-2 py-1 rounded text-[10px] font-bold ${getStatusBadgeClass(d.status)}">${d.status}</span></td>
+                    <td class="p-3 text-slate-600">${d.resolutionDate || 'N/A'}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="openAdminModal('${d.id}')" class="bg-navy hover:bg-slate-700 text-white px-3 py-1 rounded text-[11px] font-bold transition">Gestionar</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function getStatusBadgeClass(status) {
+            switch(status) {
+                case 'Pendiente': return 'bg-amber-100 text-amber-800';
+                case 'En Proceso': return 'bg-blue-100 text-blue-800';
+                case 'Resuelto': return 'bg-emerald-100 text-emerald-800';
+                case 'Rechazado': return 'bg-rose-100 text-rose-800';
+                default: return 'bg-slate-100 text-slate-800';
+            }
+        }
+
+        function openAdminModal(id) {
+            const doc = documents.find(d => d.id === id);
+            if (!doc) return;
+
+            document.getElementById('edit-doc-id').value = doc.id;
+            document.getElementById('edit-status').value = doc.status;
+            document.getElementById('edit-resolution-date').value = doc.resolutionDate || '';
+            document.getElementById('edit-answer-notes').value = doc.answerNotes || '';
+            document.getElementById('edit-extra-notes').value = doc.extraNotes || '';
+            document.getElementById('modal-title').textContent = `Gestionar: ${doc.trackingCode} (${doc.branchName})`;
+
+            document.getElementById('admin-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('admin-modal').classList.add('hidden');
+        }
+
+        function saveAdminEdit(e) {
+            e.preventDefault();
+            const id = document.getElementById('edit-doc-id').value;
+            const doc = documents.find(d => d.id === id);
+            if (!doc) return;
+
+            doc.status = document.getElementById('edit-status').value;
+            doc.resolutionDate = document.getElementById('edit-resolution-date').value;
+            doc.answerNotes = document.getElementById('edit-answer-notes').value;
+            doc.extraNotes = document.getElementById('edit-extra-notes').value;
+            
+            doc.history.push({ user: currentUser.username, action: `Editado estatus a ${doc.status}`, time: new Date().toLocaleString() });
+
+            localStorage.setItem('fle_documents', JSON.stringify(documents));
+            closeModal();
+            renderAdminTable();
+            alert("¡Cambios guardados exitosamente!");
+        }
+
+        function resetFilters() {
+            document.getElementById('filter-branch').value = '';
+            document.getElementById('filter-status').value = '';
+            renderAdminTable();
+        }
+
+        // Export and Import Backup for Google Drive
+        function exportBackup() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(documents, null, 2));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", `respaldo_portal_fle_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+        }
+
+        function importBackup(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    const imported = JSON.parse(event.target.result);
+                    if (Array.isArray(imported)) {
+                        documents = imported;
+                        localStorage.setItem('fle_documents', JSON.stringify(documents));
+                        if (currentUser.type === 'branch') renderBranchTable();
+                        else renderAdminTable();
+                        alert("¡Respaldo restaurado exitosamente en la aplicación!");
+                    } else {
+                        alert("El archivo no tiene el formato correcto.");
+                    }
+                } catch(err) {
+                    alert("Error al leer el archivo JSON.");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Auto-login if session exists
+        window.onload = function() {
+            const savedUser = localStorage.getItem('fle_current_user');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                initApp();
+            }
+        };
+    </script>
+</body>
+</html>
